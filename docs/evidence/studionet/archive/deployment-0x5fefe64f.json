@@ -1,0 +1,13 @@
+{
+  "network": "studionet",
+  "chainId": 61999,
+  "contractAddress": "0x8130E299F73DA0ca59Ff015F7baAa424441f024F",
+  "explorerUrl": "https://explorer-studio.genlayer.com/address/0x8130E299F73DA0ca59Ff015F7baAa424441f024F",
+  "sourceCommit": "a24bfe7",
+  "transactionHash": "0x5fefe64f0e96e86d61d0456564ae0cad9f678c0c7c8e157102228344c61762f6",
+  "status": "FINALIZED",
+  "resultName": "MAJORITY_AGREE",
+  "executionResult": "SUCCESS",
+  "statusReason": "SUPERSEDED by the later recovered deployment after receipt normalization; no lifecycle value was sent to this revision.",
+  "evidenceIsSanitized": true
+}

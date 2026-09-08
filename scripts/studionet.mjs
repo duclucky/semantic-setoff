@@ -62,7 +62,7 @@ function writeEvidence(file, value) {
 }
 
 function extractAddress(receipt) {
-  const values = [receipt?.contractAddress, receipt?.result?.contractAddress, receipt?.deployment?.contractAddress, receipt?.txDataDecoded?.contractAddress, receipt?.tx_data_decoded?.contract_address, receipt?.execution_result?.return_data?.contractAddress, receipt?.consensus_data?.leader_receipt?.[0]?.execution_result?.contract_address].filter(Boolean);
+  const values = [receipt?.contractAddress, receipt?.result?.contractAddress, receipt?.deployment?.contractAddress, receipt?.txDataDecoded?.contractAddress, receipt?.tx_data_decoded?.contract_address, receipt?.recipient, receipt?.to_address, receipt?.execution_result?.return_data?.contractAddress, receipt?.consensus_data?.leader_receipt?.[0]?.execution_result?.contract_address].filter(Boolean);
   if (!values.length) throw new Error("contract address not found in sanitized receipt fields");
   return String(values[0]);
 }
@@ -145,6 +145,18 @@ async function deploy() {
   console.log(`EXPLORER_URL=${deployment.explorerUrl}`);
 }
 
+async function recover(hash, revision = sourceCommit()) {
+  loadEnv();
+  if (!hash || !/^0x[0-9a-fA-F]{64}$/.test(hash)) throw new Error("recover requires a transaction hash");
+  const { clients } = await makeClients();
+  const receipt = await waitFinal(clients[0], hash);
+  const address = extractAddress(receipt);
+  const deployment = { network: "studionet", chainId: CHAIN_ID, contractAddress: address, explorerUrl: `https://explorer-studio.genlayer.com/address/${address}`, sourceCommit: revision, sourceSha256: sourceHash(), deploy: summarizeReceipt(hash, receipt), evidenceIsSanitized: true };
+  writeEvidence(DEPLOYMENT_PATH, deployment);
+  console.log(`STUDIONET_DEPLOYMENT_RECOVERED contract=${address}`);
+  console.log(`EXPLORER_URL=${deployment.explorerUrl}`);
+}
+
 async function lifecycle() {
   loadEnv();
   if (!fs.existsSync(DEPLOYMENT_PATH)) throw new Error("deployment.json missing; deploy first");
@@ -173,5 +185,6 @@ loadEnv();
 const command = process.argv[2] || "preflight";
 if (command === "preflight") await preflight();
 else if (command === "deploy") await deploy();
+else if (command === "recover") await recover(process.argv[3], process.argv[4]);
 else if (command === "lifecycle") await lifecycle();
 else throw new Error(`unknown command ${command}`);
