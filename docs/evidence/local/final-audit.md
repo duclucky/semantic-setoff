@@ -20,14 +20,14 @@ MASTER_REREAD_OK chars=64769 prompt_end=True
 | 5 Intelligent Contract | DONE | `genvm-lint` recognizes `SemanticSetoff`, 14 methods, exact header and one class. |
 | 6 Direct/gltest/local verification | DONE for direct/local; integration pending | `12 passed`; GLSim smoke separately failed in Windows temp-file harness before execution. |
 | 7 genlayer-js integration | DONE locally | Adapter test, TypeScript, production build, finality polling and canonical reload checks pass. |
-| 8 Studionet lifecycle | BLOCKED_AUTHORITY | Preflight: `ACTOR_AUTH_REQUIRED missing=STUDIONET_PARTICIPANT_C_PRIVATE_KEY`; no transaction attempted. |
-| 9 Deployed address wiring | PENDING_REAL_EVIDENCE | Depends on Phase 8. |
+| 8 Studionet lifecycle | DONE | `ACTORS_READY count=3`; deployment finalized; 14 lifecycle transactions finalized successfully; canonical state `SETTLED`; 6 GEN withdrawn and conservation holds. |
+| 9 Deployed address wiring | DONE LOCALLY | Ignored `frontend/.env` points to the verified contract; live-configured build succeeds. |
 | 10 English-only audit | DONE locally | Manual route review and secret-content scan pass; see `english-audit.txt`. |
-| 11 Public GitHub publication | PENDING_AUTHORIZATION | No push performed. |
-| 12 Vercel deploy | PENDING_AUTHORIZATION | No deployment performed. |
+| 11 Public GitHub publication | AUTHORIZED / IN PROGRESS | User authorized push; public remote/CI evidence still pending. |
+| 12 Vercel deploy | AUTHORIZED / IN PROGRESS | User authorized deploy; production URL evidence still pending. |
 | 13 Live verification | PENDING_REAL_EVIDENCE | No production URL exists yet. |
 | 14 Final README and push | PENDING_AUTHORIZATION | Local README prepared; no push performed. |
-| 15 Acceptance and packet | PENDING_EXTERNAL_EVIDENCE | Copy-ready draft exists; `npm run acceptance` reports 6 blockers, so no no-blocker result can be claimed. |
+| 15 Acceptance and packet | PENDING_PUBLIC_AND_LIVE_EVIDENCE | Copy-ready draft exists; acceptance must be rerun after public/live evidence. |
 | 16 Postmortem and registry truth | PARTIAL | Registry and local postmortem truth updated without overstating acceptance. |
 
 ## Reusable directives
@@ -59,5 +59,8 @@ PROJECT_CHECK_OK
 SPEC_AUDIT_OK
 ```
 
-No public URL, deployment address, transaction hash, balance delta, CI run, or
-Portal acceptance is asserted by this local audit.
+No public URL, CI run, or Portal acceptance was asserted by the original local
+audit; Studionet address,
+transaction hashes and GEN deltas are now recorded in the sanitized
+Studionet evidence directory. Public URL, CI, Vercel and Portal acceptance
+remain pending until separately verified.

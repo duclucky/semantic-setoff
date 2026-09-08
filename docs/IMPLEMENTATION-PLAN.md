@@ -4,7 +4,8 @@ Date: 2026-09-08
 Category lock: `Projects`  
 Target network: Studionet  
 Submission channel: Portal Builders  
-Current checkpoint: Phase 8 is pending authorized third actor; local contract/frontend verification is green
+Current checkpoint: Phase 10 complete locally; GitHub/Vercel/Portal stages remain
+in progress with Studionet evidence now verified
 
 This plan operationalizes `MASTER-PROMPT-GENLAYER-END-TO-END.md` without
 replacing it. A phase starts only after the prior exit gate is supported by
@@ -194,7 +195,7 @@ Status: `DONE` — visual structure is now governed by FE-PRESERVE.
   retryable ambiguity; absent-address mode remains honest and every claimed
   lifecycle row has a wrapper.
 
-### Phase 8 — Studionet deploy and consequential lifecycle — PENDING_REAL_EVIDENCE (AUTHORITY)
+### Phase 8 — Studionet deploy and consequential lifecycle — DONE
 
 1. Read `genlayer-cli` and `integration-tests` skills; check current official
    network/tool status before diagnosing failures.
@@ -213,16 +214,20 @@ Status: `DONE` — visual structure is now governed by FE-PRESERVE.
 - Exit proof: finalized consequential lifecycle and zero/fully accounted
   contract state; otherwise mark the exact item `PENDING_REAL_EVIDENCE` and do
   not widen claims. Current safe preflight output is
-  `ACTOR_AUTH_REQUIRED missing=STUDIONET_PARTICIPANT_C_PRIVATE_KEY`; only two
-  authorized parent-root keys are present. No deployment or value transaction
-  was attempted. Local gltest smoke is separately recorded as
-  `PENDING_HARNESS_FIX` in `docs/evidence/local/gltest-smoke.txt`.
+  Preflight reached `ACTORS_READY count=3`. Deployment is bound in
+  `docs/evidence/studionet/deployment.json`; lifecycle round
+  `setoff-a3bc176` reached `SETTLED`, all 14 transactions were
+  `FINALIZED/MAJORITY_AGREE/SUCCESS`, and canonical accounting holds with 6
+  GEN withdrawn. Funding and a superseded deployment are separately archived.
+  Local gltest smoke remains `PENDING_HARNESS_FIX` in
+  `docs/evidence/local/gltest-smoke.txt`.
 
-### Phase 9 — Bind deployed address — PENDING_REAL_EVIDENCE (depends on Phase 8)
+### Phase 9 — Bind deployed address — DONE LOCALLY
 
 - Put only public deployment/RPC configuration in ignored `frontend/.env`.
 - Rebuild and ensure the live adapter reads the active deployment.
-- Exit command: `cd frontend; npm run build` with success.
+- Exit command: `cd frontend; npm run build` with the active Studionet address
+  in ignored `frontend/.env`; build succeeds.
 
 ### Phase 10 — English-only audit — READY_LOCALLY (external proof pending)
 
@@ -231,7 +236,7 @@ Status: `DONE` — visual structure is now governed by FE-PRESERVE.
 - Exit proof: scan output plus manual review reports no non-English user-facing
   string.
 
-### Phase 11 — Public GitHub hygiene and publication — PENDING_AUTHORIZATION
+### Phase 11 — Public GitHub hygiene and publication — AUTHORIZED / IN PROGRESS
 
 1. Create a public-file allowlist and inspect top-level, status, diff, staged
    list and tracked list.
@@ -247,14 +252,14 @@ Status: `DONE` — visual structure is now governed by FE-PRESERVE.
 - Exit proof: public URL, intact history, allowlisted `git ls-files`, secret scan
   clean and successful current-commit CI.
 
-### Phase 12 — Vercel production deploy — PENDING_AUTHORIZATION
+### Phase 12 — Vercel production deploy — AUTHORIZED / IN PROGRESS
 
 - Create/import project with repo name, root `frontend`, Vite preset,
   `npm run build`, output `dist`, and public production env only.
 - Try exact subdomain then `-app`, `-dapp`, `-demo` in order if occupied.
 - Exit proof: resolved production deployment URL/status.
 
-### Phase 13 — Live verification — PENDING_REAL_EVIDENCE (depends on Phase 12)
+### Phase 13 — Live verification — PENDING_DEPLOYMENT
 
 - Require `curl -I` HTTP 200 and first 4,000 body bytes containing
   `SemanticSetoff` and `id="root"`.
@@ -264,7 +269,7 @@ Status: `DONE` — visual structure is now governed by FE-PRESERVE.
 - Exit proof: command outputs plus sanitized browser evidence. Any HTTP/body/
   browser-RPC failure stops the pipeline.
 
-### Phase 14 — Final README and push — PENDING_AUTHORIZATION
+### Phase 14 — Final README and push — AUTHORIZED / IN PROGRESS
 
 - Write a public root README with pitch, trust boundary, architecture, methods,
   exact tests, Studionet steps/evidence, contract/Explorer, live app, local run,
@@ -273,7 +278,7 @@ Status: `DONE` — visual structure is now governed by FE-PRESERVE.
 - Exit proof: remote README at current commit contains verified live URL and
   active contract address.
 
-### Phase 15 — Four-source audit, acceptance gate and submission packet — PENDING_EXTERNAL_EVIDENCE
+### Phase 15 — Four-source audit, acceptance gate and submission packet — PENDING_PUBLIC_AND_LIVE_EVIDENCE
 
 1. Cross-check source, fresh test output, current network evidence and all
    README/docs/frontend claims.

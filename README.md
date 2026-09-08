@@ -8,12 +8,11 @@ credit distribution, a non-nettable refund, or a retryable no-movement result.
 
 ## Current status
 
-The contract, direct tests, frontend adapter, and production build are locally
-verified. Studionet deployment and browser-wallet writes are intentionally not
-claimed yet: the authorized environment currently provides only two distinct
-actor keys, while the V1 lifecycle requires three. The local GLSim integration
-smoke is recorded as a Windows temporary-file harness failure, not a passing
-integration result.
+The contract, direct tests, frontend adapter, production build, Studionet
+deployment, and a consequential three-actor lifecycle are verified. Browser
+wallet writes are wired but require a compatible wallet extension in the browser
+for interactive proof. The local GLSim integration smoke is recorded as a
+Windows temporary-file harness failure, not a passing integration result.
 
 ## Repository map
 
@@ -37,8 +36,20 @@ npm run audit:spec
 ```
 
 The current local check reports `12 passed`, `FRONTEND_ADAPTER_TEST_OK`, and
-`PROJECT_CHECK_OK`. The production build is a verification artifact only; it
-does not imply a deployed contract or live chain state.
+`PROJECT_CHECK_OK`.
+
+## Studionet evidence
+
+- Network: Studionet, chain ID `61999`.
+- Active contract: [`0xaD05145f...B7E4f5c`](https://explorer-studio.genlayer.com/address/0xaD05145fcec7914189FcAe469288c8E2cB7E4f5c).
+- Deployment receipt: `FINALIZED`, `MAJORITY_AGREE`, execution `SUCCESS`.
+- Lifecycle round: `setoff-a3bc176` finalized as `SETTLED`.
+- Canonical accounting: 6 GEN funded, 0 GEN locked, 0 GEN outstanding, 6 GEN
+  withdrawn; `conservation_holds=true`.
+- Sanitized transaction and canonical-view evidence: `docs/evidence/studionet/`.
+
+The browser build uses this address only through ignored local configuration;
+no private key is included in the frontend.
 
 ## Value and trust boundary
 
@@ -48,8 +59,7 @@ own authenticated charter, obligations, validator classification, GEN
 accounting, and final state. It does not prove service delivery, legal identity,
 solvency, fiat payment, or enforceability outside the deployed contract.
 
-## Not yet published
+## Publication status
 
-No GitHub push, Vercel deployment, Portal submission, or Studionet transaction
-has been performed from this repository. Those steps require the corresponding
-authorized actor and explicit action-time authorization.
+GitHub, Vercel, and Portal status are tracked in the implementation plan and
+must not be inferred from the local build or this README.

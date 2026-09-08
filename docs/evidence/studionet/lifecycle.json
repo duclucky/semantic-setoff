@@ -1,0 +1,215 @@
+{
+  "network": "studionet",
+  "contractAddress": "0xaD05145fcec7914189FcAe469288c8E2cB7E4f5c",
+  "roundId": "setoff-a3bc176",
+  "transactions": {
+    "create_round_1": {
+      "transactionHash": "0xa39440df1e250c5531c6adfd01a0fe3081b59ff26f3dd9cbc08d9ff7abd41101",
+      "status": "FINALIZED",
+      "resultName": "MAJORITY_AGREE",
+      "executionResult": "SUCCESS",
+      "executionError": ""
+    },
+    "ratify_and_fund_2": {
+      "transactionHash": "0x0bdc653f98b0240ed55ee67dd7d928bd2c6fe317401019e1105a35236932edb1",
+      "status": "FINALIZED",
+      "resultName": "MAJORITY_AGREE",
+      "executionResult": "SUCCESS",
+      "executionError": ""
+    },
+    "ratify_and_fund_3": {
+      "transactionHash": "0xe941d8e35c730aaf3440a42d33585ea9f18fa5181337f8b2ec857ecccecb8fa0",
+      "status": "FINALIZED",
+      "resultName": "MAJORITY_AGREE",
+      "executionResult": "SUCCESS",
+      "executionError": ""
+    },
+    "ratify_and_fund_4": {
+      "transactionHash": "0xb9b190635eb38f19badf57118d5eb9248ccc3a30a5a63cb9769a6229d2faaf35",
+      "status": "FINALIZED",
+      "resultName": "MAJORITY_AGREE",
+      "executionResult": "SUCCESS",
+      "executionError": ""
+    },
+    "record_obligation_5": {
+      "transactionHash": "0x45ea8df9c88b38110d150334bdba880c1117edb88b75baa80bbf43c9850d1992",
+      "status": "FINALIZED",
+      "resultName": "MAJORITY_AGREE",
+      "executionResult": "SUCCESS",
+      "executionError": ""
+    },
+    "record_obligation_6": {
+      "transactionHash": "0x98ce4ac63cedbc8dc7344de4b06cc76c65dbd39220d256817efc8ff82128f74f",
+      "status": "FINALIZED",
+      "resultName": "MAJORITY_AGREE",
+      "executionResult": "SUCCESS",
+      "executionError": ""
+    },
+    "record_obligation_7": {
+      "transactionHash": "0x54db574af532756c9224b6a1599f5a1475676169d61f675c087975130c0eee47",
+      "status": "FINALIZED",
+      "resultName": "MAJORITY_AGREE",
+      "executionResult": "SUCCESS",
+      "executionError": ""
+    },
+    "accept_obligation_8": {
+      "transactionHash": "0xe491249602623744d44e54275fba76bacc73f67fb5d82d14998e7694f9d30dbc",
+      "status": "FINALIZED",
+      "resultName": "MAJORITY_AGREE",
+      "executionResult": "SUCCESS",
+      "executionError": ""
+    },
+    "accept_obligation_9": {
+      "transactionHash": "0xe458d490f5187d117915f9ce030c344369905ae05b024ed0eb7cebf51e7f0a53",
+      "status": "FINALIZED",
+      "resultName": "MAJORITY_AGREE",
+      "executionResult": "SUCCESS",
+      "executionError": ""
+    },
+    "accept_obligation_10": {
+      "transactionHash": "0xce034d30864e472e2aba59909fad1ce0d8b4851ad8cc6d3345527f0824213e10",
+      "status": "FINALIZED",
+      "resultName": "MAJORITY_AGREE",
+      "executionResult": "SUCCESS",
+      "executionError": ""
+    },
+    "review_round_11": {
+      "transactionHash": "0x35e2f0e2a9999206de6f6b2955bab82826f455955cd2c3ad4690ad9979caf7ab",
+      "status": "FINALIZED",
+      "resultName": "MAJORITY_AGREE",
+      "executionResult": "SUCCESS",
+      "executionError": ""
+    },
+    "withdraw_credit_12": {
+      "transactionHash": "0xd323db20419cfd5dc7d97205293ff2e96b2724c32241c31d54d41f81b4fc3c0c",
+      "status": "FINALIZED",
+      "resultName": "MAJORITY_AGREE",
+      "executionResult": "SUCCESS",
+      "executionError": ""
+    },
+    "withdraw_credit_13": {
+      "transactionHash": "0x8872052111297a632fab5e56ed33d3e6871de25c0a576bf5c46751b0cacea514",
+      "status": "FINALIZED",
+      "resultName": "MAJORITY_AGREE",
+      "executionResult": "SUCCESS",
+      "executionError": ""
+    },
+    "withdraw_credit_14": {
+      "transactionHash": "0xf74886c95b5062821ee30c851ac262a4d5f495b6f349b9198954339ad17b42d2",
+      "status": "FINALIZED",
+      "resultName": "MAJORITY_AGREE",
+      "executionResult": "SUCCESS",
+      "executionError": ""
+    }
+  },
+  "canonical": {
+    "round": {
+      "acceptance_deadline": "1788855281",
+      "accepted_count": 3,
+      "charter": "All three named obligations are same-framework GEN debts and may be netted only after exact creditor acceptance.",
+      "charter_digest": "sha256:17d12f7ebbf939c7eeaa4fe5d2a1a14e95cf1bcc8685b47948a077b9232c7caf",
+      "coordinator": "0xC495ef51618D03267A1f227aFe5b27B38c748272",
+      "exists": true,
+      "funded_count": 3,
+      "funding_deadline": "1788854081",
+      "last_outcome": "SETTLED",
+      "last_summary": "All three obligations form a closed three-party cycle under the same framework and GEN denomination, and each shows accepted=True. Therefore each exact stored obligation is nettable.",
+      "locked_funds_gen": "0",
+      "obligation_count": 3,
+      "obligation_deadline": "1788854681",
+      "outstanding_credits_gen": "0",
+      "participant_count": 3,
+      "review_attempt": 0,
+      "review_deadline": "1788857081",
+      "round_id": "setoff-a3bc176",
+      "state": "SETTLED",
+      "total_funded_gen": "6",
+      "withdrawn_credits_gen": "6"
+    },
+    "participants": {
+      "exists": true,
+      "participants": [
+        {
+          "credit_gen": "0",
+          "funded": true,
+          "index": 0,
+          "obligation_id": "O:0",
+          "participant": "0xC495ef51618D03267A1f227aFe5b27B38c748272",
+          "ratified": true
+        },
+        {
+          "credit_gen": "0",
+          "funded": true,
+          "index": 1,
+          "obligation_id": "O:1",
+          "participant": "0x45aD397c438397A702B53a7499a78D08961D39Db",
+          "ratified": true
+        },
+        {
+          "credit_gen": "0",
+          "funded": true,
+          "index": 2,
+          "obligation_id": "O:2",
+          "participant": "0xf9CC478BCDACEa25BB0E3FbF320FfA64Cb51e8a3",
+          "ratified": true
+        }
+      ]
+    },
+    "obligations": {
+      "exists": true,
+      "obligations": [
+        {
+          "accepted": true,
+          "amount_gen": "1",
+          "classification": "NETTABLE",
+          "creditor": "0x45aD397c438397A702B53a7499a78D08961D39Db",
+          "debtor": "0xC495ef51618D03267A1f227aFe5b27B38c748272",
+          "digest": "sha256:ea0da349d10b658b06de68a06134fba68c071d2aeed393b8933cdd059f3f8fce",
+          "discharged": true,
+          "obligation_id": "O:0",
+          "terms": "Same framework, same GEN denomination, and mutual creditor acceptance are required for setoff."
+        },
+        {
+          "accepted": true,
+          "amount_gen": "2",
+          "classification": "NETTABLE",
+          "creditor": "0xf9CC478BCDACEa25BB0E3FbF320FfA64Cb51e8a3",
+          "debtor": "0x45aD397c438397A702B53a7499a78D08961D39Db",
+          "digest": "sha256:44a287b2d948d9d1738bc66719e97a900e4a59e9061107e9832d64e37ad5eba9",
+          "discharged": true,
+          "obligation_id": "O:1",
+          "terms": "Same framework, same GEN denomination, and mutual creditor acceptance are required for setoff."
+        },
+        {
+          "accepted": true,
+          "amount_gen": "1",
+          "classification": "NETTABLE",
+          "creditor": "0xC495ef51618D03267A1f227aFe5b27B38c748272",
+          "debtor": "0xf9CC478BCDACEa25BB0E3FbF320FfA64Cb51e8a3",
+          "digest": "sha256:57b9ae7a1cd66c376fc744b903e021e2e72a498e669df5aff53778a0892ba64e",
+          "discharged": true,
+          "obligation_id": "O:2",
+          "terms": "Same framework, same GEN denomination, and mutual creditor acceptance are required for setoff."
+        }
+      ]
+    },
+    "accounting": {
+      "conservation_holds": true,
+      "total_funded_gen": "6",
+      "total_locked_gen": "0",
+      "total_outstanding_gen": "0",
+      "total_withdrawn_gen": "6"
+    },
+    "balancesBeforeGEN": {
+      "0xC495ef51618D03267A1f227aFe5b27B38c748272": "1905.639997",
+      "0x45aD397c438397A702B53a7499a78D08961D39Db": "8.521000",
+      "0xf9CC478BCDACEa25BB0E3FbF320FfA64Cb51e8a3": "2.000000"
+    },
+    "balancesAfterGEN": {
+      "0xC495ef51618D03267A1f227aFe5b27B38c748272": "1905.639997",
+      "0x45aD397c438397A702B53a7499a78D08961D39Db": "7.521000",
+      "0xf9CC478BCDACEa25BB0E3FbF320FfA64Cb51e8a3": "3.000000"
+    }
+  },
+  "evidenceIsSanitized": true
+}

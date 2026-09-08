@@ -22,18 +22,18 @@ digest, then derives the consequence: a fully accounted settlement credit,
 non-nettable refund, or retryable no-movement result. The UI separates EVM
 wallet writes from GenLayer IC reads and reloads canonical state after
 finalization. Current local evidence: one linted contract, 12 direct tests,
-frontend adapter tests, and a successful production build. Studionet,
-browser-wallet, public repository, CI, Vercel, and Portal evidence remain
-pending because the authorized environment has only two distinct actors for a
-three-actor lifecycle.
+frontend adapter tests, and a successful production build. Studionet deployment
+and a full three-actor `SETTLED` lifecycle are now verified. Public repository,
+CI, browser-wallet interaction, Vercel, and Portal evidence remain pending
+until their separate checks complete.
 
 ## Evidence fields
 
 | Field | Current value |
 |---|---|
 | Repository | `PENDING_PUBLIC_REPOSITORY` |
-| Primary contract Explorer | `PENDING_STUDIONET_DEPLOYMENT` |
-| Lifecycle evidence | `PENDING_THREE_ACTOR_AUTHORIZATION` |
+| Primary contract Explorer | https://explorer-studio.genlayer.com/address/0xaD05145fcec7914189FcAe469288c8E2cB7E4f5c |
+| Lifecycle evidence | `docs/evidence/studionet/lifecycle.json` (`SETTLED`, 6 GEN withdrawn) |
 | CI link | `PENDING_PUBLIC_REPOSITORY` |
 | Live demo | `PENDING_VERCEL_DEPLOYMENT` |
 | Contract count | `1` (`SemanticSetoff`) |
