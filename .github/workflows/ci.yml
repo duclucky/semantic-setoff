@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: windows-latest
+    env:
+      PYTHONUTF8: "1"
+      PYTHONIOENCODING: "utf-8"
+      GENVM_VERSION: "v0.2.16"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Create virtual environment
+        shell: pwsh
+        run: python -m venv .venv
+      - name: Install Python dependencies
+        shell: pwsh
+        run: .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+      - name: Download pinned GenVM runner
+        shell: pwsh
+        run: .\.venv\Scripts\genvm-lint.exe download --version $env:GENVM_VERSION
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Install frontend dependencies
+        shell: pwsh
+        working-directory: frontend
+        run: npm ci
+      - name: Run project check
+        shell: pwsh
+        run: npm run check
+      - name: Audit specification
+        shell: pwsh
+        run: npm run audit:spec
