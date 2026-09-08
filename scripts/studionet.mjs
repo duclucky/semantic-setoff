@@ -80,7 +80,10 @@ function summarizeReceipt(hash, receipt) {
 
 function assertExecutionSuccess(receipt) {
   const summary = summarizeReceipt("", receipt);
-  if (!["SUCCESS", "FINISHED_WITH_RETURN"].includes(String(summary.executionResult).toUpperCase())) throw new Error(`execution failed: ${summary.executionResult} ${summary.executionError}`);
+  if (!["SUCCESS", "FINISHED_WITH_RETURN"].includes(String(summary.executionResult).toUpperCase())) {
+    const keys = Object.keys(receipt ?? {}).sort().join(",");
+    throw new Error(`execution failed: ${summary.executionResult} ${summary.executionError} receiptKeys=${keys}`);
+  }
   return summary;
 }
 
@@ -133,6 +136,7 @@ async function deploy() {
   const { clients } = await makeClients();
   const code = fs.readFileSync(CONTRACT_PATH, "utf8");
   const hash = await clients[0].deployContract({ code, args: [] });
+  console.log(`STUDIONET_DEPLOY_SUBMITTED hash=${hash}`);
   const receipt = await waitFinal(clients[0], hash);
   const address = extractAddress(receipt);
   const deployment = { network: "studionet", chainId: CHAIN_ID, contractAddress: address, explorerUrl: `https://explorer-studio.genlayer.com/address/${address}`, sourceCommit: sourceCommit(), sourceSha256: sourceHash(), deploy: summarizeReceipt(hash, receipt), evidenceIsSanitized: true };
