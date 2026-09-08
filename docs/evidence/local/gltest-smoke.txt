@@ -1,0 +1,18 @@
+Local integration smoke status: PENDING_HARNESS_FIX
+
+Command:
+  .venv\Scripts\glsim.exe --port 4000 --validators 3 --no-browser
+  .venv\Scripts\gltest.exe tests\integration\ -v -s --network localnet
+
+Observed output (sanitized):
+  FINALIZED
+  execution_result: ERROR
+  [WinError 32] The process cannot access the file because it is being used by another process:
+  'C:\\Users\\TBC\\AppData\\Local\\Temp\\tmp...'
+  validators agreed, but no contract was created and no canonical view was readable.
+
+Interpretation:
+  The failure occurs in the Windows local GLSim/gltest temporary-file harness
+  before contract execution. It is not counted as a passing integration test,
+  not used as Studionet evidence, and does not change the direct-test result.
+  Re-run this smoke test after the harness/runtime issue is resolved.

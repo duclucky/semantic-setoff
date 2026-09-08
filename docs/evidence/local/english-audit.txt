@@ -1,0 +1,10 @@
+Command:
+  rg -nP "[^\\x00-\\x7F]" frontend README.md docs\\README.md contracts tests scripts
+
+Result:
+  Non-ASCII matches are typographic punctuation (en/em dashes, ellipses,
+  curly apostrophe) and documentation examples of the word ASCII. No
+  non-English user-facing words were found in the manual route review.
+
+Manual result: ENGLISH_UI_AUDIT_OK
+Secret-content scan: SECRET_CONTENT_SCAN_OK

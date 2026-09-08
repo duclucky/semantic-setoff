@@ -1,0 +1,15 @@
+Command:
+  node scripts/studionet.mjs preflight
+
+Real output:
+  ACTOR_AUTH_REQUIRED missing=STUDIONET_PARTICIPANT_C_PRIVATE_KEY
+
+Safe configuration checks performed before this result:
+  - project `.env` was checked first, then the authorized parent `.env`;
+    private-key values were never printed;
+  - the parent environment contains two distinct authorized actor keys;
+  - the product lifecycle requires three distinct actors;
+  - no new EOA was generated and no funding transaction was sent.
+
+This is an authority blocker for the three-actor Studionet lifecycle, not a
+contract or frontend failure.

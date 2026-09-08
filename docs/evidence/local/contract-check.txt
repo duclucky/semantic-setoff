@@ -1,0 +1,14 @@
+Command: npm run check
+
+CONTRACT_SOURCE_OK ASCII_HEADER_SINGLE_CLASS
+LINT: genvm-lint v0.11.0, GENVM_VERSION=v0.2.16
+Lint passed (3 checks)
+Validation passed
+  Contract: SemanticSetoff
+  Methods: 14 (7 view, 7 write)
+............                                                             [100%]
+12 passed in 1.18s
+FRONTEND_ADAPTER_TEST_OK
+vite v8.2.2 building client environment for production...
+5033 modules transformed.
+PROJECT_CHECK_OK

@@ -1,0 +1,10 @@
+{
+  "name": "semantic-setoff",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SemanticSetoff GenLayer Projects contract and frontend",
+  "scripts": {
+    "check": "powershell -ExecutionPolicy Bypass -File scripts/check.ps1",
+    "audit:spec": "node scripts/audit-spec.mjs"
+  }
+}
