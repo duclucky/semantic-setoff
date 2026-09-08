@@ -1,0 +1,17 @@
+# Current-commit CI verification (sanitized)
+
+Repository: https://github.com/duclucky/semantic-setoff
+Run: https://github.com/duclucky/semantic-setoff/actions/runs/34204332387
+Job: https://github.com/duclucky/semantic-setoff/actions/runs/34204332387/job/101990184479
+
+```text
+headSha=769a2bfa68cdb9e78ecf4d9fe027cb162a3e673d
+status=completed
+conclusion=success
+job=check
+steps=Run project check:success; Audit specification:success
+```
+
+The run checked the same pinned GenVM runner family, direct tests, frontend
+adapter test, TypeScript/build, and specification audit as local `npm run
+check` and `npm run audit:spec`.

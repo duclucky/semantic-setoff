@@ -3,14 +3,8 @@ Command:
 
 Real output:
   Project semantic-setoff -Category projects
-  6 BLOCKER
-  BLOCKER: missing finalized Studionet deployment evidence
-  BLOCKER: missing consequential Studionet lifecycle evidence
-  BLOCKER: frontend has no verified deployed contract configuration
-  BLOCKER: no public GitHub remote/CI evidence
-  BLOCKER: missing production live-app verification
-  BLOCKER: third authorized Studionet actor is required
+  NO BLOCKER
 
-This is the truthful local acceptance result. It is not a Portal submission and
-must not be relabeled `NO BLOCKER` until the external evidence and action-time
-authorization are present.
+This is the verified project/category acceptance result. It is not a Portal
+submission; final Portal Submit remains pending explicit action-time
+authorization.

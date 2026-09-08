@@ -1,0 +1,17 @@
+# Public repository verification (sanitized)
+
+```text
+git rev-parse --show-toplevel
+D:/Genlayer Project/semantic-setoff
+
+gh repo view duclucky/semantic-setoff --json nameWithOwner,isPrivate,url,defaultBranchRef,description
+{"defaultBranchRef":{"name":"main"},"description":"SemanticSetoff: validator-checked three-party GEN obligation netting on GenLayer","isPrivate":false,"nameWithOwner":"duclucky/semantic-setoff","url":"https://github.com/duclucky/semantic-setoff"}
+
+git rev-parse HEAD
+769a2bfa68cdb9e78ecf4d9fe027cb162a3e673d
+```
+
+The staged allowlist and ignored-file checks found no `.env`, key, wallet
+export, root control document, or private evidence dump in the public tree.
+Local `D:\Genlayer Project\semantic-setoff\.env`, `frontend/.env`,
+`frontend/.env.local`, and `frontend/.vercel` remain ignored.

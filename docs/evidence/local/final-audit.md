@@ -57,7 +57,15 @@ FRONTEND_ADAPTER_TEST_OK
 5033 modules transformed.
 PROJECT_CHECK_OK
 SPEC_AUDIT_OK
+Project semantic-setoff -Category projects
+NO BLOCKER
 ```
+
+Current public proof is pinned to commit `769a2bfa68cdb9e78ecf4d9fe027cb162a3e673d`:
+GitHub CI run `34204332387` completed `success`, and the production Vercel
+alias is `https://semantic-setoff.vercel.app/`. The browser IC RPC returned HTTP
+200 with chain `0xf22f`; Chrome canonical funding evidence is stored under
+`docs/evidence/studionet/browser-wallet-funding.json`.
 
 Public repository, CI, Vercel and browser evidence are now recorded in
 `docs/evidence/public/`, `docs/evidence/live/app.txt`, and
