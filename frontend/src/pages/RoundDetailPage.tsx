@@ -9,8 +9,8 @@ import { useAsyncData } from "../hooks/useAsyncData";
 import type { TransactionProgress } from "../types";
 import { useWallet } from "../wallet/WalletContext";
 
-function formatDeadline(epoch: number) {
-  return new Intl.DateTimeFormat("en", { dateStyle: "medium", timeStyle: "short" }).format(new Date(epoch * 1000));
+function formatDeadline(timestampMs: number) {
+  return new Intl.DateTimeFormat("en", { dateStyle: "medium", timeStyle: "short" }).format(new Date(timestampMs));
 }
 
 export function RoundDetailPage() {
@@ -62,7 +62,7 @@ export function RoundDetailPage() {
         <aside className="workspace-aside">
           <section className="action-card"><p className="eyebrow">Your next step</p>{!session ? <><h2>Connect the listed wallet</h2><p>Actions appear only after the selected account matches a participant.</p><button className="button primary full" type="button" onClick={openPicker}>Choose wallet</button></> : !participant ? <><h2>Read-only for this wallet</h2><p>{shortenAddress(session.account)} is not one of the three participants.</p></> : !participant.joined && round.stage === "OPEN" ? <><h2>Ratify and lock 2 GEN</h2><p>Approve the exact charter and fund your fixed collateral before the funding deadline.</p><button className="button primary full" type="button" onClick={() => void run("join")}>Join with 2 GEN</button></> : participant.joined && !participant.obligationId && ["FUNDED", "OBLIGATIONS_RECORDED"].includes(round.stage) ? <><h2>Record your outgoing obligation</h2><p>Choose one other participant and acknowledge 1 or 2 GEN.</p><Link className="button primary full" to={`/rounds/${round.id}/obligations/new`}>Record obligation</Link></> : incoming ? <><h2>Confirm incoming terms</h2><p>Only your wallet can confirm the exact obligation from {shortenAddress(incoming.debtor)}.</p><button className="button primary full" type="button" onClick={() => void run("accept", incoming.id)}>Accept {incoming.amountGen} GEN obligation</button></> : round.stage === "READY" ? <><h2>Ready for semantic review</h2><p>All three edges are confirmed. Review readiness before requesting validator consensus.</p><Link className="button primary full" to={`/rounds/${round.id}/review`}>Review the set</Link></> : isTerminal && (participant.creditGen > 0) ? <><h2>{participant.creditGen} GEN available</h2><p>This credit comes from the finalized settlement or refund path.</p><button className="button primary full" type="button" onClick={() => void run("withdraw")}>Withdraw {participant.creditGen} GEN</button></> : <><h2>No action waiting</h2><p>Another participant or network finality must complete the next step.</p></>}
             {round.nextDeadline && <div className="deadline-line"><Clock aria-hidden="true" /><span>Next deadline<strong>{formatDeadline(round.nextDeadline)}</strong></span></div>}
-            {!isTerminal && round.nextDeadline && Date.now() >= round.nextDeadline * 1000 && participant && <button className="button secondary full" type="button" onClick={() => void run("expire")}>Close and create refunds</button>}
+            {!isTerminal && round.nextDeadline && Date.now() >= round.nextDeadline && participant && <button className="button secondary full" type="button" onClick={() => void run("expire")}>Close and create refunds</button>}
             {actionError && <p className="form-error" role="alert">{actionError}</p>}<TransactionStatus progress={progress} />
           </section>
           <section className="content-card compact"><h2>Participants</h2>{round.participantStates.map((item, index) => <div className="participant-row" key={item.address}><span><b>{String.fromCharCode(65 + index)}</b>{shortenAddress(item.address)}</span><span>{item.joined ? "2 GEN locked" : "Not joined"}</span></div>)}</section>

@@ -27,5 +27,17 @@
       "participant": "0xBd733BC56Ec4a55FA25C068B9306b0171335D199"
     }
   },
+  "scriptContinuation": {
+    "participantBFundingHash": "0xebaaf8c7a9213f55d2359765a91af4673f7f7a1e2a61c3d221fc3263f645bcc0",
+    "participantCFundingHash": "0xfb09df7eb0aabdd3cc5d99fb7dc2ae848f9767ef9648a84958da7a40bfddfb6e",
+    "bothStatus": "FINALIZED",
+    "bothResultName": "MAJORITY_AGREE",
+    "canonicalAfterScriptContinuation": {
+      "state": "FUNDED",
+      "fundedCount": 3,
+      "totalFundedGEN": 6,
+      "lockedFundsGEN": 6
+    }
+  },
   "evidenceIsSanitized": true
 }

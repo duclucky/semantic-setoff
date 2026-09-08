@@ -28,6 +28,10 @@ reported `state=OPEN`, `fundedCount=1`, `totalFundedGEN=2`, and
 `lockedFundsGEN=2`. The wallet transaction hash is recorded in
 `docs/evidence/studionet/browser-wallet-funding.json`.
 
+Two authorized script-signed demo actors then joined the same round with 2 GEN
+each (`FINALIZED/MAJORITY_AGREE`), and a fresh Chrome canonical read reported
+`state=FUNDED`, `fundedCount=3`, `totalFundedGEN=6`, and `lockedFundsGEN=6`.
+
 Direct production route checks returned the intended app for `/`, `/rounds`,
 `/rounds/new`, `/rounds/:roundId`, `/rounds/:roundId/obligations/new`,
 `/rounds/:roundId/review`, `/activity`, `/settings`, `/help`, and the not-found
