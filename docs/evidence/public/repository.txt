@@ -8,7 +8,7 @@ gh repo view duclucky/semantic-setoff --json nameWithOwner,isPrivate,url,default
 {"defaultBranchRef":{"name":"main"},"description":"SemanticSetoff: validator-checked three-party GEN obligation netting on GenLayer","isPrivate":false,"nameWithOwner":"duclucky/semantic-setoff","url":"https://github.com/duclucky/semantic-setoff"}
 
 git rev-parse HEAD
-769a2bfa68cdb9e78ecf4d9fe027cb162a3e673d
+d6977cb348e479c183bfed03e45f2989073d140e
 ```
 
 The staged allowlist and ignored-file checks found no `.env`, key, wallet

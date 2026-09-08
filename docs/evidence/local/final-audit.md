@@ -61,8 +61,8 @@ Project semantic-setoff -Category projects
 NO BLOCKER
 ```
 
-Current public proof is pinned to commit `769a2bfa68cdb9e78ecf4d9fe027cb162a3e673d`:
-GitHub CI run `34204332387` completed `success`, and the production Vercel
+Current public proof is pinned to commit `d6977cb348e479c183bfed03e45f2989073d140e`:
+GitHub CI run `34205748128` completed `success`, and the production Vercel
 alias is `https://semantic-setoff.vercel.app/`. The browser IC RPC returned HTTP
 200 with chain `0xf22f`; Chrome canonical funding evidence is stored under
 `docs/evidence/studionet/browser-wallet-funding.json`.
