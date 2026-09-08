@@ -21,14 +21,14 @@ MASTER_REREAD_OK chars=64769 prompt_end=True
 | 6 Direct/gltest/local verification | DONE for direct/local; integration pending | `12 passed`; GLSim smoke separately failed in Windows temp-file harness before execution. |
 | 7 genlayer-js integration | DONE locally | Adapter test, TypeScript, production build, finality polling and canonical reload checks pass. |
 | 8 Studionet lifecycle | DONE | `ACTORS_READY count=3`; deployment finalized; 14 lifecycle transactions finalized successfully; canonical state `SETTLED`; 6 GEN withdrawn and conservation holds. |
-| 9 Deployed address wiring | DONE LOCALLY | Ignored `frontend/.env` points to the verified contract; live-configured build succeeds. |
-| 10 English-only audit | DONE locally | Manual route review and secret-content scan pass; see `english-audit.txt`. |
-| 11 Public GitHub publication | AUTHORIZED / IN PROGRESS | User authorized push; public remote/CI evidence still pending. |
-| 12 Vercel deploy | AUTHORIZED / IN PROGRESS | User authorized deploy; production URL evidence still pending. |
-| 13 Live verification | PENDING_REAL_EVIDENCE | No production URL exists yet. |
-| 14 Final README and push | PENDING_AUTHORIZATION | Local README prepared; no push performed. |
-| 15 Acceptance and packet | PENDING_PUBLIC_AND_LIVE_EVIDENCE | Copy-ready draft exists; acceptance must be rerun after public/live evidence. |
-| 16 Postmortem and registry truth | PARTIAL | Registry and local postmortem truth updated without overstating acceptance. |
+| 9 Deployed address wiring | DONE | Ignored `frontend/.env` points to the verified contract; live-configured build succeeds. |
+| 10 English-only audit | DONE | Manual route review and secret-content scan pass; see `english-audit.txt`. |
+| 11 Public GitHub publication | DONE after current-head push/CI | Public repository and current-commit CI evidence are recorded under `docs/evidence/public/`. |
+| 12 Vercel deploy | DONE | Production alias is READY and uses the public contract/RPC configuration. |
+| 13 Live verification | DONE (browser write scope documented) | HTTP 200, SPA routes, browser CORS, wallet discovery and a finalized 2 GEN browser funding write are recorded in `docs/evidence/live/app.txt`. |
+| 14 Final README and push | DONE after current-head push | Remote README includes the verified contract, CI, repository and live URLs. |
+| 15 Acceptance and packet | DONE (Portal pending) | `npm run acceptance` reports `NO BLOCKER`; packet is copy-ready and final Portal Submit is intentionally not clicked. |
+| 16 Postmortem and registry truth | DONE (Portal pending) | Registry and project truth match the verified public/live/network evidence. |
 
 ## Reusable directives
 
@@ -59,8 +59,8 @@ PROJECT_CHECK_OK
 SPEC_AUDIT_OK
 ```
 
-No public URL, CI run, or Portal acceptance was asserted by the original local
-audit; Studionet address,
-transaction hashes and GEN deltas are now recorded in the sanitized
-Studionet evidence directory. Public URL, CI, Vercel and Portal acceptance
-remain pending until separately verified.
+Public repository, CI, Vercel and browser evidence are now recorded in
+`docs/evidence/public/`, `docs/evidence/live/app.txt`, and
+`docs/evidence/studionet/browser-wallet-funding.json`. Portal acceptance is not
+claimed: the copy-ready packet is complete, but final Submit requires explicit
+action-time authorization.

@@ -1,0 +1,31 @@
+{
+  "network": "studionet",
+  "chainId": 61999,
+  "source": "Chrome OKX Wallet demo",
+  "address": "0xbd733bc56ec4a55fa25c068b9306b0171335d199",
+  "fundingTransaction": {
+    "transactionHash": "0x7b838aa7105095991a8125f44dbb3e94a80621b9fee6acc814971d6a8e08aa10",
+    "from": "0xC495ef51618D03267A1f227aFe5b27B38c748272",
+    "to": "0xBd733BC56Ec4a55FA25C068B9306b0171335D199",
+    "amountGEN": 100,
+    "receiptStatus": "0x1",
+    "networkStatus": "FINALIZED",
+    "resultName": "NO_MAJORITY",
+    "sourceBalanceAfterGEN": "1805.639997",
+    "destinationBalanceGEN": 100
+  },
+  "browserRound": {
+    "roundId": "round-mtse8le6",
+    "openTransactionConfirmedByCanonicalRead": true,
+    "fundingTransactionHash": "0x0d39af09d10565723317863ff809227a6eae325f68add0a7eb3a3a1fae8d96ac",
+    "fundingStatus": "FINALIZED",
+    "canonicalAfterFunding": {
+      "state": "OPEN",
+      "fundedCount": 1,
+      "totalFundedGEN": 2,
+      "lockedFundsGEN": 2,
+      "participant": "0xBd733BC56Ec4a55FA25C068B9306b0171335D199"
+    }
+  },
+  "evidenceIsSanitized": true
+}

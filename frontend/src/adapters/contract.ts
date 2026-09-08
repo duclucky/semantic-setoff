@@ -169,20 +169,33 @@ export class LiveContractAdapter implements ContractAdapter {
     onProgress: ProgressListener,
   ): Promise<void> {
     onProgress({ phase: "AWAITING_WALLET", message: "Approve this GEN transaction in your selected wallet." });
-    let hash: TransactionHash;
+    let hash: TransactionHash | undefined;
     try {
-      hash = await this.writeClient(wallet).writeContract({
+      const submittedHash = await this.writeClient(wallet).writeContract({
         address: this.address,
         functionName,
         args: args as never[],
         value,
       });
-      onProgress({ phase: "SUBMITTED", hash, message: "Transaction submitted; waiting for the network decision." });
-      await this.readClient.waitForTransactionReceipt({ hash, status: TransactionStatus.ACCEPTED });
-      onProgress({ phase: "ACCEPTED", hash, message: "Accepted and decided; waiting for finalization." });
-      await this.readClient.waitForTransactionReceipt({ hash, status: TransactionStatus.FINALIZED });
-      onProgress({ phase: "FINALIZED", hash, message: "Finalized. Reloading canonical contract state." });
+      hash = submittedHash;
+      onProgress({ phase: "SUBMITTED", hash: submittedHash, message: "Transaction submitted; waiting for the network decision." });
+      await this.readClient.waitForTransactionReceipt({ hash: submittedHash, status: TransactionStatus.ACCEPTED });
+      onProgress({ phase: "ACCEPTED", hash: submittedHash, message: "Accepted and decided; waiting for finalization." });
+      await this.readClient.waitForTransactionReceipt({ hash: submittedHash, status: TransactionStatus.FINALIZED });
+      onProgress({ phase: "FINALIZED", hash: submittedHash, message: "Finalized. Reloading canonical contract state." });
     } catch (reason) {
+      // Some wallet providers can surface a late, stale rejection after the
+      // transaction hash was already accepted. Recover only when the canonical
+      // IC receipt proves finality; never turn an unverified hash into success.
+      if (hash) {
+        try {
+          await this.readClient.waitForTransactionReceipt({ hash, status: TransactionStatus.FINALIZED });
+          onProgress({ phase: "FINALIZED", hash, message: "Transaction finalized. Reloading canonical contract state." });
+          return;
+        } catch {
+          // The hash was not proven finalized, so retain the failure path below.
+        }
+      }
       const message = reason instanceof Error ? reason.message : "The transaction did not finalize.";
       onProgress({ phase: "FAILED", message });
       throw reason;

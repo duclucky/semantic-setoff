@@ -13,6 +13,7 @@ assert.match(adapter, /createClient\(\{\s*chain: studionet,\s*account: wallet\.a
 assert.match(adapter, /TransactionStatus\.ACCEPTED/);
 assert.match(adapter, /TransactionStatus\.FINALIZED/);
 assert.match(adapter, /phase: "FAILED"/);
+assert.match(adapter, /if \(hash\)[\s\S]*status: TransactionStatus\.FINALIZED/);
 assert.match(adapter, /phase: "AWAITING_WALLET"/);
 assert.match(adapter, /phase: "RETRYABLE"/);
 assert.match(wallet, /eip6963:requestProvider/);

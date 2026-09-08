@@ -9,10 +9,11 @@ credit distribution, a non-nettable refund, or a retryable no-movement result.
 ## Current status
 
 The contract, direct tests, frontend adapter, production build, Studionet
-deployment, and a consequential three-actor lifecycle are verified. Browser
-wallet writes are wired but require a compatible wallet extension in the browser
-for interactive proof. The local GLSim integration smoke is recorded as a
-Windows temporary-file harness failure, not a passing integration result.
+deployment, and a consequential three-actor lifecycle are verified. A Chrome
+OKX Wallet session also opened a real round and finalized a 2 GEN funding write;
+the browser extension confirmation remains a user-controlled step. The local
+GLSim integration smoke is recorded as a Windows temporary-file harness
+failure, not a passing integration result.
 
 ## Repository map
 
@@ -61,5 +62,8 @@ solvency, fiat payment, or enforceability outside the deployed contract.
 
 ## Publication status
 
-GitHub, Vercel, and Portal status are tracked in the implementation plan and
-must not be inferred from the local build or this README.
+Public repository: [github.com/duclucky/semantic-setoff](https://github.com/duclucky/semantic-setoff).
+CI run: [current Windows check](https://github.com/duclucky/semantic-setoff/actions).
+Live app: [semantic-setoff.vercel.app](https://semantic-setoff.vercel.app/).
+Portal submission remains intentionally pending explicit final-submit
+authorization; these links are not Portal acceptance claims.

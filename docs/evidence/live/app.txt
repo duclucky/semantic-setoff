@@ -1,0 +1,38 @@
+# Production live verification (sanitized)
+
+Date: 2026-09-08
+Production URL: https://semantic-setoff.vercel.app/
+Vercel deployment: https://vercel.com/duckys-projects-bc83c6a0/semantic-setoff/GzGMPtV4kceJtWKBnVX5XCMY2uxY
+
+HTTP/body check (PowerShell):
+
+```text
+HTTP_STATUS=200
+HAS_SEMANTICSETTLEOFF=True
+HAS_ROOT_ID=True
+```
+
+Browser-local IC RPC check from the production origin:
+
+```text
+POST https://studio.genlayer.com/api
+method=eth_chainId
+status=200
+body={"jsonrpc":"2.0","result":"0xf22f","id":9}
+```
+
+The browser result `0xf22f` is chain `61999` (Studionet). A Chrome session
+detected OKX Wallet, connected account `0xbd733bc56ec4a55fa25c068b9306b0171335d199`,
+created `round-mtse8le6`, and the canonical read after the wallet transaction
+reported `state=OPEN`, `fundedCount=1`, `totalFundedGEN=2`, and
+`lockedFundsGEN=2`. The wallet transaction hash is recorded in
+`docs/evidence/studionet/browser-wallet-funding.json`.
+
+Direct production route checks returned the intended app for `/`, `/rounds`,
+`/rounds/new`, `/rounds/:roundId`, `/rounds/:roundId/obligations/new`,
+`/rounds/:roundId/review`, `/activity`, `/settings`, `/help`, and the not-found
+route. Console error/warning count for the clean live browser run was zero.
+
+The Chrome wallet extension itself requires the user to confirm signing; the
+agent did not access or automate the `chrome-extension://` popup. The script
+signed Studionet lifecycle remains separate from this browser-wallet proof.

@@ -569,8 +569,10 @@ owned by the deployed contract.
 Wallet origin does not prove legal identity or independent ownership, so three
 colluding wallets remain possible. Ambiguous semantic consensus is retryable and
 non-penalizing. The fixed three-edge, whole-GEN ring intentionally omits partial
-netting and rounding. Browser writes, deployment, adoption and Portal acceptance
-remain pending until their named phases produce current evidence.
+netting and rounding. The live browser evidence covers one selected-wallet
+funding path; the full three-actor consequence is evidenced by the script-signed
+Studionet lifecycle. Portal acceptance remains pending explicit final-submit
+authorization.
 
 ## Kill criteria
 

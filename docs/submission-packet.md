@@ -1,6 +1,7 @@
 # Portal Builders submission packet (copy-ready draft)
 
-Status: `PENDING_REAL_EVIDENCE` — do not submit yet.
+Status: `READY_FOR_PORTAL_REVIEW` — do not click final Submit without explicit
+action-time authorization.
 
 ## Category
 
@@ -24,25 +25,27 @@ wallet writes from GenLayer IC reads and reloads canonical state after
 finalization. Current local evidence: one linted contract, 12 direct tests,
 frontend adapter tests, and a successful production build. Studionet deployment
 and a full three-actor `SETTLED` lifecycle are now verified. Public repository,
-CI, browser-wallet interaction, Vercel, and Portal evidence remain pending
-until their separate checks complete.
+current-commit CI, Chrome wallet funding, and Vercel live evidence are recorded
+below. Portal acceptance is not claimed.
 
 ## Evidence fields
 
 | Field | Current value |
 |---|---|
-| Repository | `PENDING_PUBLIC_REPOSITORY` |
+| Repository | https://github.com/duclucky/semantic-setoff |
 | Primary contract Explorer | https://explorer-studio.genlayer.com/address/0xaD05145fcec7914189FcAe469288c8E2cB7E4f5c |
 | Lifecycle evidence | `docs/evidence/studionet/lifecycle.json` (`SETTLED`, 6 GEN withdrawn) |
-| CI link | `PENDING_PUBLIC_REPOSITORY` |
-| Live demo | `PENDING_VERCEL_DEPLOYMENT` |
+| CI link | https://github.com/duclucky/semantic-setoff/actions |
+| Live demo | https://semantic-setoff.vercel.app/ |
 | Contract count | `1` (`SemanticSetoff`) |
 | Direct tests | `12 passed` |
-| Local acceptance | `PROJECT_CHECK_OK` |
+| Local acceptance | `Project semantic-setoff -Category projects` / `NO BLOCKER` |
 
 ## Honest limits
 
 The prototype does not prove offchain service delivery, legal identity,
-solvency, fiat payment, or enforceability outside the deployed contract. Do not
-replace any pending field with an invented URL, address, receipt, balance, or
-finality claim.
+solvency, fiat payment, or enforceability outside the deployed contract. The
+browser demo proves one selected-wallet round open/funding path and canonical
+reload; the full three-actor consequence is evidenced separately by the
+sanitized Studionet lifecycle. Do not replace Portal acceptance with an
+inference from CI, Vercel, or local checks.

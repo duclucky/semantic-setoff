@@ -4,8 +4,9 @@ Date: 2026-09-08
 Category lock: `Projects`  
 Target network: Studionet  
 Submission channel: Portal Builders  
-Current checkpoint: Phase 10 complete locally; GitHub/Vercel/Portal stages remain
-in progress with Studionet evidence now verified
+Current checkpoint: Phases 0–14 are evidenced; Portal final submission remains
+pending explicit action-time authorization. Studionet and browser funding
+evidence are verified.
 
 This plan operationalizes `MASTER-PROMPT-GENLAYER-END-TO-END.md` without
 replacing it. A phase starts only after the prior exit gate is supported by
@@ -229,14 +230,14 @@ Status: `DONE` — visual structure is now governed by FE-PRESERVE.
 - Exit command: `cd frontend; npm run build` with the active Studionet address
   in ignored `frontend/.env`; build succeeds.
 
-### Phase 10 — English-only audit — READY_LOCALLY (external proof pending)
+### Phase 10 — English-only audit — DONE
 
 - Scan frontend, root README and code comments for non-English user copy.
 - Preserve technical enums/keys/URLs.
 - Exit proof: scan output plus manual review reports no non-English user-facing
   string.
 
-### Phase 11 — Public GitHub hygiene and publication — AUTHORIZED / IN PROGRESS
+### Phase 11 — Public GitHub hygiene and publication — DONE
 
 1. Create a public-file allowlist and inspect top-level, status, diff, staged
    list and tracked list.
@@ -252,33 +253,36 @@ Status: `DONE` — visual structure is now governed by FE-PRESERVE.
 - Exit proof: public URL, intact history, allowlisted `git ls-files`, secret scan
   clean and successful current-commit CI.
 
-### Phase 12 — Vercel production deploy — AUTHORIZED / IN PROGRESS
+### Phase 12 — Vercel production deploy — DONE
 
 - Create/import project with repo name, root `frontend`, Vite preset,
   `npm run build`, output `dist`, and public production env only.
 - Try exact subdomain then `-app`, `-dapp`, `-demo` in order if occupied.
-- Exit proof: resolved production deployment URL/status.
+- Exit proof: `https://semantic-setoff.vercel.app/` returns a READY production
+  deployment with public configuration and the SPA rewrite.
 
-### Phase 13 — Live verification — PENDING_DEPLOYMENT
+### Phase 13 — Live verification — DONE (browser write scope documented)
 
 - Require `curl -I` HTTP 200 and first 4,000 body bytes containing
   `SemanticSetoff` and `id="root"`.
 - Open the real production URL in a browser and inspect every route, responsive
   layout, console, IC reads, wallet picker and at least the safely authorized
   browser transaction lifecycle. Distinguish read proof from write proof.
-- Exit proof: command outputs plus sanitized browser evidence. Any HTTP/body/
-  browser-RPC failure stops the pipeline.
+- Exit proof: `docs/evidence/live/app.txt` plus
+  `docs/evidence/studionet/browser-wallet-funding.json`. The extension popup is
+  user-controlled; the recorded browser write finalized and canonical state
+  reloaded. No wallet key or extension internals were accessed.
 
-### Phase 14 — Final README and push — AUTHORIZED / IN PROGRESS
+### Phase 14 — Final README and push — DONE
 
 - Write a public root README with pitch, trust boundary, architecture, methods,
   exact tests, Studionet steps/evidence, contract/Explorer, live app, local run,
   security and honest limitations.
 - Push a new commit only after hygiene checks repeat.
-- Exit proof: remote README at current commit contains verified live URL and
-  active contract address.
+- Exit proof: remote README at the pushed commit contains the verified live URL,
+  public repository, and active contract address.
 
-### Phase 15 — Four-source audit, acceptance gate and submission packet — PENDING_PUBLIC_AND_LIVE_EVIDENCE
+### Phase 15 — Four-source audit, acceptance gate and submission packet — DONE
 
 1. Cross-check source, fresh test output, current network evidence and all
    README/docs/frontend claims.
@@ -290,15 +294,13 @@ Status: `DONE` — visual structure is now governed by FE-PRESERVE.
 4. Prepare Projects title, <=1,000-character English description with exact
    count, repository/contract/lifecycle/CI/demo evidence, verified facts,
    limitations and category rationale.
-5. Submit through the authenticated Portal session only if the master prompt's
-   standing authorization remains applicable at action time and no final-submit
-   rule requires renewed explicit authorization; otherwise stop at the
-   copy-ready packet and state the one precise pending action.
+5. Do not submit through the authenticated Portal session in this run: final
+   Submit requires separate action-time authorization. The packet is copy-ready.
 6. Emit the exact five-field short report only with verified URLs/address.
-- Exit proof: clean audit, no-blocker acceptance output and self-contained
-  packet.
+- Exit proof: clean audit, `NO BLOCKER` acceptance output and self-contained
+  packet; Portal final submission is the one intentionally pending action.
 
-### Phase 16 — Postmortem and root registry truth — PARTIAL (local truth only)
+### Phase 16 — Postmortem and root registry truth — DONE (Portal pending)
 
 - Record what passed, failed, required redesign and remains pending; update
   IDEA-026 status/fingerprint/outcome without overstating Portal acceptance.
