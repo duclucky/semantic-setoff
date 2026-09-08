@@ -73,7 +73,7 @@ function summarizeReceipt(hash, receipt) {
     transactionHash: hash,
     status: receipt?.networkStatus ?? receipt?.status ?? receipt?.statusName ?? "",
     resultName: receipt?.result_name ?? receipt?.resultName ?? receipt?.txResultName ?? "",
-    executionResult: execution?.result ?? execution?.status ?? receipt?.txExecutionResultName ?? receipt?.executionResult ?? receipt?.txExecutionResult ?? "UNKNOWN",
+    executionResult: typeof execution === "string" ? execution : execution?.result ?? execution?.status ?? receipt?.txExecutionResultName ?? receipt?.executionResult ?? receipt?.txExecutionResult ?? "UNKNOWN",
     executionError: execution?.error ?? execution?.message ?? "",
   };
 }
