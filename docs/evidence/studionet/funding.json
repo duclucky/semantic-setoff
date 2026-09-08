@@ -1,0 +1,11 @@
+{
+  "network": "studionet",
+  "chainId": 61999,
+  "transactionHash": "0x3d1e2935a00669a42985a1dd30bbfad7c60d7de4cea1cd9365f2ea9abbbd96d5",
+  "status": "0x1",
+  "blockNumber": "0x0",
+  "from": "0xC495ef51618D03267A1f227aFe5b27B38c748272",
+  "to": "0xf9CC478BCDACEa25BB0E3FbF320FfA64Cb51e8a3",
+  "amountGEN": 2,
+  "destinationBalanceGEN": 2
+}

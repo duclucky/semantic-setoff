@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync, execSync } from "node:child_process";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const PROJECT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const CONTRACT_PATH = path.join(PROJECT, "contracts", "semantic_setoff.py");
@@ -91,8 +91,16 @@ async function waitFinal(client, hash) {
 }
 
 async function makeClients() {
-  const { createAccount, createClient } = await import("genlayer-js");
-  const { studionet } = await import("genlayer-js/chains");
+  const sdkImport = async (subpath = "") => {
+    try {
+      return await import(`genlayer-js${subpath}`);
+    } catch {
+      const file = path.join(PROJECT, "frontend", "node_modules", "genlayer-js", "dist", subpath ? subpath.slice(1) : "index.js", subpath ? "index.js" : "");
+      return import(pathToFileURL(file).href);
+    }
+  };
+  const { createAccount, createClient } = await sdkImport();
+  const { studionet } = await sdkImport("/chains");
   const accounts = ACTOR_KEYS.map((name) => createAccount(keyFor(name)));
   const endpoint = process.env.STUDIONET_RPC_URL || studionet.rpcUrls.default.http[0];
   const clients = accounts.map((account) => createClient({ chain: studionet, endpoint, account }));
