@@ -78,7 +78,8 @@ explicit non-live labeling path.
 - Every planned page is routed and reachable through primary navigation,
   contextual links, account/footer support links or direct deep link.
 - The main journey is represented end to end. Live writes remain disabled until
-  Phase 7; no simulated transaction/finality exists.
+  a verified deployment address and separate wallet/read RPC configuration are
+  supplied; no simulated transaction/finality exists.
 - Primary pages contain no `node_config`, receipt payload, normalized validator
   output, attempt ID, reviewer or submission surface.
 - Contextual controls are role/stage dependent in the adapter-facing UI.
