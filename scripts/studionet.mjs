@@ -163,22 +163,85 @@ async function lifecycle() {
   const deployment = JSON.parse(fs.readFileSync(DEPLOYMENT_PATH, "utf8"));
   if (!deployment.contractAddress) throw new Error("deployment address missing");
   const { accounts, clients, reader } = await makeClients();
-  const roundId = `setoff-${sourceCommit().slice(0, 8)}`;
+  const roundId = `setoff-${String(deployment.sourceCommit || sourceCommit()).slice(0, 8)}`;
   const now = Math.floor(Date.now() / 1000);
   const deadlines = [now + 600, now + 1200, now + 1800, now + 3600];
   const transactions = {};
+  const read = async (functionName, args = []) => {
+    const value = await reader.readContract({ address: deployment.contractAddress, functionName, args, jsonSafeReturn: true });
+    if (typeof value === "string") return JSON.parse(value);
+    return value;
+  };
+  const balances = async () => Object.fromEntries(await Promise.all(accounts.map(async (account) => [account.address, (Number(await reader.getBalance({ address: account.address })) / Number(GEN)).toFixed(6)])));
   const call = async (index, functionName, args, value = 0n) => {
     const hash = await clients[index].writeContract({ address: deployment.contractAddress, functionName, args, value });
-    transactions[functionName + (Object.keys(transactions).length ? `_${Object.keys(transactions).length}` : "")] = { transactionHash: hash, status: "SUBMITTED" };
-    const receipt = await waitFinal(clients[index], hash);
-    transactions[functionName + (Object.keys(transactions).length ? `_${Object.keys(transactions).length - 1}` : "")] = summarizeReceipt(hash, receipt);
+    const key = `${functionName}_${Object.keys(transactions).length + 1}`;
+    transactions[key] = { transactionHash: hash, status: "SUBMITTED" };
     writeEvidence(LIFECYCLE_PATH, { network: "studionet", contractAddress: deployment.contractAddress, roundId, transactions, evidenceIsSanitized: true });
+    const receipt = await waitFinal(clients[index], hash);
+    transactions[key] = summarizeReceipt(hash, receipt);
+    writeEvidence(LIFECYCLE_PATH, { network: "studionet", contractAddress: deployment.contractAddress, roundId, transactions, evidenceIsSanitized: true });
+    return receipt;
   };
-  await call(0, "create_round", [roundId, accounts[1].address, accounts[2].address, "All three named obligations are same-framework GEN debts and may be netted only after exact creditor acceptance.", ...deadlines.map(BigInt)]);
-  const charter = await reader.readContract({ address: deployment.contractAddress, functionName: "get_round", args: [roundId], jsonSafeReturn: true });
-  const charterDigest = typeof charter === "string" ? JSON.parse(charter).charter_digest : charter.charter_digest;
-  for (let index = 0; index < 3; index += 1) await call(index, "ratify_and_fund", [roundId, charterDigest], 2n * GEN);
-  console.log("LIFECYCLE_PENDING_REVIEW round=" + roundId);
+  const beforeBalances = await balances();
+  let round = await read("get_round", [roundId]);
+  if (!round.exists) {
+    await call(0, "create_round", [roundId, accounts[1].address, accounts[2].address, "All three named obligations are same-framework GEN debts and may be netted only after exact creditor acceptance.", ...deadlines.map(BigInt)]);
+    round = await read("get_round", [roundId]);
+  }
+  const participantsView = async () => read("get_participants", [roundId]);
+  let participants = (await participantsView()).participants || [];
+  for (let index = 0; index < accounts.length; index += 1) {
+    const row = participants.find((item) => String(item.participant).toLowerCase() === accounts[index].address.toLowerCase());
+    if (!row?.funded) await call(index, "ratify_and_fund", [roundId, round.charter_digest], 2n * GEN);
+    participants = (await participantsView()).participants || [];
+  }
+  round = await read("get_round", [roundId]);
+  const obligationsByDebtor = async () => (await read("get_obligations", [roundId])).obligations || [];
+  let obligations = await obligationsByDebtor();
+  const obligationPlan = [
+    { creditor: accounts[1].address, amount: 1, terms: "Same framework, same GEN denomination, and mutual creditor acceptance are required for setoff." },
+    { creditor: accounts[2].address, amount: 2, terms: "Same framework, same GEN denomination, and mutual creditor acceptance are required for setoff." },
+    { creditor: accounts[0].address, amount: 1, terms: "Same framework, same GEN denomination, and mutual creditor acceptance are required for setoff." },
+  ];
+  for (let index = 0; index < accounts.length; index += 1) {
+    if (!obligations.some((item) => String(item.debtor).toLowerCase() === accounts[index].address.toLowerCase())) {
+      const plan = obligationPlan[index];
+      await call(index, "record_obligation", [roundId, plan.creditor, BigInt(plan.amount), plan.terms]);
+      obligations = await obligationsByDebtor();
+    }
+  }
+  for (const obligation of obligations) {
+    if (obligation.accepted) continue;
+    const creditorIndex = accounts.findIndex((account) => account.address.toLowerCase() === String(obligation.creditor).toLowerCase());
+    if (creditorIndex < 0) throw new Error("obligation creditor is outside actor set");
+    await call(creditorIndex, "accept_obligation", [roundId, obligation.debtor, obligation.digest]);
+  }
+  round = await read("get_round", [roundId]);
+  let reviewAttempts = 0;
+  while (round.state === "READY" && reviewAttempts < 3) {
+    await call(0, "review_round", [roundId]);
+    reviewAttempts += 1;
+    round = await read("get_round", [roundId]);
+  }
+  if (round.state === "READY") throw new Error("review remained READY after three bounded attempts");
+  if (!["SETTLED", "NOT_NETTABLE", "EXPIRED"].includes(round.state)) throw new Error(`unexpected terminal state ${round.state}`);
+  participants = (await participantsView()).participants || [];
+  for (let index = 0; index < accounts.length; index += 1) {
+    const row = participants.find((item) => String(item.participant).toLowerCase() === accounts[index].address.toLowerCase());
+    if (Number(row?.credit_gen || 0) > 0) await call(index, "withdraw_credit", [roundId]);
+    participants = (await participantsView()).participants || [];
+  }
+  const canonical = {
+    round: await read("get_round", [roundId]),
+    participants: await read("get_participants", [roundId]),
+    obligations: await read("get_obligations", [roundId]),
+    accounting: await read("get_accounting"),
+    balancesBeforeGEN: beforeBalances,
+    balancesAfterGEN: await balances(),
+  };
+  writeEvidence(LIFECYCLE_PATH, { network: "studionet", contractAddress: deployment.contractAddress, roundId, transactions, canonical, evidenceIsSanitized: true });
+  console.log(`STUDIONET_LIFECYCLE_FINALIZED round=${roundId} state=${canonical.round.state} accounting=${canonical.accounting.conservation_holds}`);
 }
 
 loadEnv();
