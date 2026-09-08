@@ -5,6 +5,7 @@
   "description": "SemanticSetoff GenLayer Projects contract and frontend",
   "scripts": {
     "check": "powershell -ExecutionPolicy Bypass -File scripts/check.ps1",
-    "audit:spec": "node scripts/audit-spec.mjs"
+    "audit:spec": "node scripts/audit-spec.mjs",
+    "acceptance": "node scripts/precheck.mjs"
   }
 }

@@ -27,7 +27,7 @@ MASTER_REREAD_OK chars=64769 prompt_end=True
 | 12 Vercel deploy | PENDING_AUTHORIZATION | No deployment performed. |
 | 13 Live verification | PENDING_REAL_EVIDENCE | No production URL exists yet. |
 | 14 Final README and push | PENDING_AUTHORIZATION | Local README prepared; no push performed. |
-| 15 Acceptance and packet | PENDING_EXTERNAL_EVIDENCE | Copy-ready draft exists; no no-blocker result can be claimed. |
+| 15 Acceptance and packet | PENDING_EXTERNAL_EVIDENCE | Copy-ready draft exists; `npm run acceptance` reports 6 blockers, so no no-blocker result can be claimed. |
 | 16 Postmortem and registry truth | PARTIAL | Registry and local postmortem truth updated without overstating acceptance. |
 
 ## Reusable directives
