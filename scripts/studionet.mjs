@@ -71,7 +71,7 @@ function summarizeReceipt(hash, receipt) {
   const execution = receipt?.execution_result ?? receipt?.executionResult ?? receipt?.consensus_data?.leader_receipt?.[0]?.execution_result ?? {};
   return {
     transactionHash: hash,
-    status: receipt?.networkStatus ?? receipt?.status ?? receipt?.statusName ?? "",
+    status: receipt?.networkStatus ?? receipt?.status_name ?? receipt?.statusName ?? receipt?.status ?? "",
     resultName: receipt?.result_name ?? receipt?.resultName ?? receipt?.txResultName ?? "",
     executionResult: typeof execution === "string" ? execution : execution?.result ?? execution?.status ?? receipt?.txExecutionResultName ?? receipt?.executionResult ?? receipt?.txExecutionResult ?? "UNKNOWN",
     executionError: execution?.error ?? execution?.message ?? "",
