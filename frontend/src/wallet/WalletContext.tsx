@@ -18,12 +18,37 @@ interface WalletContextValue {
 }
 
 const WalletContext = createContext<WalletContextValue | null>(null);
+const SELECTED_WALLET_KEY = "semantic-setoff.wallet-provider";
 
 function parseAccount(value: unknown): Address {
   if (!Array.isArray(value) || typeof value[0] !== "string" || !/^0x[a-fA-F0-9]{40}$/.test(value[0])) {
     throw new Error("The selected wallet did not return a valid EVM account.");
   }
   return value[0] as Address;
+}
+
+function readSelectedWalletId(): string | null {
+  try {
+    return window.sessionStorage.getItem(SELECTED_WALLET_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function rememberSelectedWallet(walletId: string): void {
+  try {
+    window.sessionStorage.setItem(SELECTED_WALLET_KEY, walletId);
+  } catch {
+    // Session storage is only a convenience for restoring the selected provider.
+  }
+}
+
+function forgetSelectedWallet(): void {
+  try {
+    window.sessionStorage.removeItem(SELECTED_WALLET_KEY);
+  } catch {
+    // Session storage is optional and must never block wallet disconnect.
+  }
 }
 
 export function WalletProvider({ children }: { children: ReactNode }) {
@@ -33,17 +58,46 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const [isDiscovering, setDiscovering] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const restoreAuthorizedWallet = useCallback(async (discovered: WalletInfo[]) => {
+    const rememberedId = readSelectedWalletId();
+    const candidates = rememberedId ? discovered.filter((wallet) => wallet.id === rememberedId) : discovered;
+    const authorized: WalletSession[] = [];
+    for (const wallet of candidates) {
+      try {
+        const accounts = await wallet.provider.request({ method: "eth_accounts" });
+        if (!Array.isArray(accounts) || accounts.length === 0) continue;
+        const account = parseAccount(accounts);
+        const chainId = await wallet.provider.request({ method: "eth_chainId" });
+        if (typeof chainId !== "string") continue;
+        authorized.push({ account, chainId, wallet });
+      } catch {
+        // A wallet may reject a passive read; it remains available for explicit selection.
+      }
+    }
+
+    if (rememberedId) {
+      if (authorized.length === 1) setSession(authorized[0]);
+      else if (authorized.length === 0) forgetSelectedWallet();
+      return;
+    }
+
+    // Never auto-pick among multiple providers. Restore only an unambiguous account.
+    if (authorized.length === 1) setSession(authorized[0]);
+  }, []);
+
   const refreshWallets = useCallback(async () => {
     setDiscovering(true);
     setError(null);
     try {
-      setWallets(await discoverWallets());
+      const discovered = await discoverWallets();
+      setWallets(discovered);
+      await restoreAuthorizedWallet(discovered);
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "Wallet discovery failed.");
     } finally {
       setDiscovering(false);
     }
-  }, []);
+  }, [restoreAuthorizedWallet]);
 
   useEffect(() => {
     void refreshWallets();
@@ -56,6 +110,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       const account = parseAccount(accounts);
       const chainId = await wallet.provider.request({ method: "eth_chainId" });
       if (typeof chainId !== "string") throw new Error("The wallet returned an invalid chain identifier.");
+      rememberSelectedWallet(wallet.id);
       setSession({ account, chainId, wallet });
       setPickerOpen(false);
     } catch (reason) {
@@ -64,6 +119,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const disconnect = useCallback(() => {
+    forgetSelectedWallet();
     setSession(null);
     setError(null);
   }, []);
@@ -116,4 +172,3 @@ export function useWallet(): WalletContextValue {
   if (!value) throw new Error("useWallet must be used within WalletProvider.");
   return value;
 }
-
