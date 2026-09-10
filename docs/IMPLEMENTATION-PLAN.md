@@ -4,9 +4,10 @@ Date: 2026-09-08
 Category lock: `Projects`  
 Target network: Studionet  
 Submission channel: Portal Builders  
-Current checkpoint: Phases 0–14 are evidenced; Portal final submission remains
-pending explicit action-time authorization. Studionet and browser funding
-evidence are verified.
+Current checkpoint: reviewer-requested charter evidence binding,
+charter-grounded verdict rules, deterministic ambiguity precedence, and the
+frontend 600-character limit pass locally. The corrected revision must replace
+the historical Studionet deployment before Portal resubmission.
 
 This plan operationalizes `MASTER-PROMPT-GENLAYER-END-TO-END.md` without
 replacing it. A phase starts only after the prior exit gate is supported by
@@ -169,7 +170,7 @@ Status: `DONE` — visual structure is now governed by FE-PRESERVE.
 7. Cover raw and normalized Studio receipt parsers and frontend helpers.
 8. Create repo Python 3.12 `.venv`, keep `PYTHONUTF8=1`, and aggregate everything
    in root `npm run check`.
-- Exit commands: targeted green direct log (`12 passed`), frontend adapter log,
+- Exit commands: targeted green direct log (`16 passed`), frontend adapter log,
   and `npm run check`; no skip/xfail and exact test count captured. The first
   red signal was a real temporal-clock mismatch; switching `_now()` to the
   GenVM-controlled `datetime.now(timezone.utc)` resolved it and the full suite

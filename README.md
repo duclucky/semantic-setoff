@@ -8,8 +8,11 @@ credit distribution, a non-nettable refund, or a retryable no-movement result.
 
 ## Current status
 
-The contract, direct tests, frontend adapter, production build, Studionet
-deployment, and a consequential three-actor lifecycle are verified. A Chrome
+The reviewer-requested charter binding, charter-grounded classification rules,
+and 600-character frontend limit are implemented and locally verified. The
+previous Studionet deployment and consequential three-actor lifecycle remain
+historical evidence for the superseded revision; the corrected revision must be
+redeployed before resubmission. A Chrome
 OKX Wallet session also opened a real round and finalized a 2 GEN funding write;
 the browser extension confirmation remains a user-controlled step. The local
 GLSim integration smoke is recorded as a Windows temporary-file harness
@@ -36,20 +39,21 @@ npm run check
 npm run audit:spec
 ```
 
-The current local check reports `12 passed`, `FRONTEND_ADAPTER_TEST_OK`, and
+The current local check reports `16 passed`, `FRONTEND_ADAPTER_TEST_OK`, and
 `PROJECT_CHECK_OK`.
 
 ## Studionet evidence
 
 - Network: Studionet, chain ID `61999`.
-- Active contract: [`0xaD05145f...B7E4f5c`](https://explorer-studio.genlayer.com/address/0xaD05145fcec7914189FcAe469288c8E2cB7E4f5c).
+- Superseded contract: [`0xaD05145f...B7E4f5c`](https://explorer-studio.genlayer.com/address/0xaD05145fcec7914189FcAe469288c8E2cB7E4f5c).
 - Deployment receipt: `FINALIZED`, `MAJORITY_AGREE`, execution `SUCCESS`.
 - Lifecycle round: `setoff-a3bc176` finalized as `SETTLED`.
 - Canonical accounting: 6 GEN funded, 0 GEN locked, 0 GEN outstanding, 6 GEN
   withdrawn; `conservation_holds=true`.
 - Sanitized transaction and canonical-view evidence: `docs/evidence/studionet/`.
 
-The browser build uses this address only through ignored local configuration;
+The deployed address above is historical until the review revision is deployed.
+The browser build uses deployment configuration only through ignored local configuration;
 no private key is included in the frontend.
 
 ## Value and trust boundary

@@ -6,8 +6,8 @@ Lint passed (3 checks)
 Validation passed
   Contract: SemanticSetoff
   Methods: 14 (7 view, 7 write)
-............                                                             [100%]
-12 passed in 1.18s
+................                                                         [100%]
+16 passed in 1.72s
 FRONTEND_ADAPTER_TEST_OK
 vite v8.2.2 building client environment for production...
 5033 modules transformed.

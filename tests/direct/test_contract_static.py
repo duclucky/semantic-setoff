@@ -26,6 +26,21 @@ def test_contract_uses_nondeterminism_and_meaning_validation():
     assert "evidence_digest" in SOURCE
 
 
+def test_review_evidence_binds_ratified_charter_and_charter_grounded_rules():
+    for text in (
+        '"charter": round_record.charter',
+        '"charter_digest": round_record.charter_digest',
+        '"ratifications": ratifications',
+        '"charter_digest"',
+        "NETTABLE only when",
+        "CONFLICT only when",
+        "AMBIGUOUS when",
+        "exact ratified charter",
+    ):
+        assert text in SOURCE
+    assert "independent = leader_fn()" in SOURCE
+
+
 def test_contract_has_temporal_guards_value_paths_and_recovery():
     for name in (
         "create_round",

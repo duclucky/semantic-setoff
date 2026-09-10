@@ -227,8 +227,9 @@ restyling: contract integration may replace adapter behavior and live data only.
 - `obligation_id`: contract-derived as `<round_id>:O:<participant_index>` where
   the index is `0`, `1` or `2`; callers cannot choose IDs.
 - `credit_key`: contract-derived as `<round_id>:C:<lowercase_address>`.
-- `obligation_set_digest`: contract-derived from the ordered charter digest and
-  exact three stored obligation representations in participant-index order.
+- `evidence_digest`: contract-derived from one canonical JSON pack containing
+  the exact charter and verified charter digest, all ratification rows,
+  charter-grounded classification rules, and exact ordered obligation records.
 - `review_attempt`: monotonically increasing only after a structurally valid
   retryable result; reverted transactions consume no attempt.
 
@@ -242,7 +243,7 @@ amount, bounded terms, digest, acceptance, class and discharge flag. Records use
 `TreeMap[str, ...]`; per-round credits use contract-derived string keys. Class-body
 containers are never reassigned in `__init__`.
 
-Text is ASCII and bounded: round ID 3–48, charter 80–1,200, obligation 60–800.
+Text is ASCII and bounded: round ID 3–48, charter 80–1,200, obligation 60–600.
 Addresses are three unique non-zero values. Obligation amount is 1 or 2 GEN;
 storage/transfers use base units with `1 GEN = 10**18`.
 
@@ -336,7 +337,12 @@ from exact transaction senders and digest ratification. A digest proves byte
 stability only; sender/round/role/deadline/charter binding proves authority for
 this contract-local purpose.
 
-Before semantic review, code requires the exact round/charter digest; three
+Before semantic review, code recomputes the exact charter digest from the round
+ID and stored charter, requires it to match the ratified digest, and binds the
+round ID, exact charter bytes, charter digest, all three participant ratification
+rows, classification rules, and exact ordered obligations into one canonical
+JSON evidence pack. The evidence digest is computed over that entire pack. Code
+also requires three
 unique contract-derived obligation IDs; each expected debtor and valid creditor;
 each 1/2 GEN amount; exact recomputed obligation digest; three creditor
 acceptances; exact ordered set digest; and READY/time state. The prompt labels
@@ -360,18 +366,30 @@ deterministic provenance gate.
 
 ### Leader task
 
-The no-argument leader closure reads the exact charter and three ordered
-obligations, then invokes `gl.nondet.exec_prompt(..., response_format="json")`
-with a bounded prompt. Output has `round_id`, `obligation_set_digest`, exactly
-three `{obligation_id, class, reason}` entries, `conflict_roots` and `summary`.
-Allowed classes are `NETTABLE`, `CONFLICT`, `AMBIGUOUS`.
+The no-argument leader closure reads the canonical JSON evidence pack containing
+the exact ratified charter, its verified digest, all ratification rows, the three
+ordered obligations, and the following charter-grounded rules, then invokes
+`gl.nondet.exec_prompt(..., response_format="json")` with a bounded prompt:
+
+- `NETTABLE` only when the exact obligation terms clearly satisfy every
+  applicable requirement in the exact ratified charter and contain no
+  prohibition, exclusion, reservation, or unmet condition against setoff.
+- `CONFLICT` only when the exact terms clearly contradict or violate at least
+  one explicit charter requirement; the obligation names itself as its root.
+- `AMBIGUOUS` whenever charter plus terms are insufficient, unclear, internally
+  inconsistent, or require an unstated fact. Missing facts are never inferred.
+
+Output has `evidence_digest`, `charter_digest`, `verdict`, exactly three
+`{obligation_id, classification, conflict_root_id}` entries, and `summary`.
 
 ### Consensus-critical fields
 
-- Exact round ID and obligation-set digest.
+- Exact evidence digest and exact charter digest.
 - Exact set of three derived obligation IDs, each once.
 - One allowed class for each expected ID.
-- Conflict roots equal exactly the IDs classed `CONFLICT`.
+- Every conflict root equals its own obligation ID.
+- Deterministic verdict precedence: any `AMBIGUOUS` makes the result retryable;
+  otherwise any `CONFLICT` makes it non-nettable; only all-`NETTABLE` settles.
 
 Unknown keys are dropped. Reason wording and ordering are noncritical after
 ID-keyed normalization; missing/invalid core fields fail before mutation.
@@ -379,8 +397,9 @@ ID-keyed normalization; missing/invalid core fields fail before mutation.
 ### Validator
 
 The validator rejects any leader value that is not `gl.vm.Return` or fails local
-invariants. It independently runs the same semantic task over exact stored bytes,
-normalizes by expected ID, and accepts only when round/set binding, per-ID classes
+invariants. It independently runs the same semantic task over the same canonical
+evidence pack and charter-grounded rules, normalizes by expected ID, and accepts
+only when evidence/charter bindings, per-ID classes, deterministic precedence,
 and conflict-root meaning match. It never accepts on JSON shape alone.
 
 ### Rationale policy

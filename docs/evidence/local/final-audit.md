@@ -18,7 +18,7 @@ MASTER_REREAD_OK chars=64769 prompt_end=True
 | 3B Frontend self-review | DONE | Browser checks at default and 375px; no horizontal overflow or console errors. |
 | 4 Full specification | DONE | `npm run audit:spec` reports 23 headings, 14 gates, 7 safety rows, 4 authority rows and 8 invariants. |
 | 5 Intelligent Contract | DONE | `genvm-lint` recognizes `SemanticSetoff`, 14 methods, exact header and one class. |
-| 6 Direct/gltest/local verification | DONE for direct/local; integration pending | `12 passed`; GLSim smoke separately failed in Windows temp-file harness before execution. |
+| 6 Direct/gltest/local verification | DONE for direct/local; integration pending | `16 passed`; GLSim smoke separately failed in Windows temp-file harness before execution. |
 | 7 genlayer-js integration | DONE locally | Adapter test, TypeScript, production build, finality polling and canonical reload checks pass. |
 | 8 Studionet lifecycle | DONE | `ACTORS_READY count=3`; deployment finalized; 14 lifecycle transactions finalized successfully; canonical state `SETTLED`; 6 GEN withdrawn and conservation holds. |
 | 9 Deployed address wiring | DONE | Ignored `frontend/.env` points to the verified contract; live-configured build succeeds. |
@@ -52,7 +52,7 @@ Lint passed (3 checks)
 Validation passed
   Contract: SemanticSetoff
   Methods: 14 (7 view, 7 write)
-12 passed in 1.22s
+16 passed (review-revision local verification)
 FRONTEND_ADAPTER_TEST_OK
 5033 modules transformed.
 PROJECT_CHECK_OK
@@ -72,3 +72,23 @@ Public repository, CI, Vercel and browser evidence are now recorded in
 `docs/evidence/studionet/browser-wallet-funding.json`. Portal acceptance is not
 claimed: the copy-ready packet is complete, but final Submit requires explicit
 action-time authorization.
+
+## Portal form preparation log — 2026-09-08
+
+`PORTAL_FORM_PREPARATION=COMPLETED`
+
+The local copy-ready form content is complete for the Portal Builders review:
+
+- Identity: `SemanticSetoff`; primary tag `Dispute Resolution`.
+- Focus: `Evidence Assessment` and `Escrow Claims`.
+- One-liner: validator-checked three-party GEN obligation netting.
+- Project description: completed within the 1,000-character field limit.
+- Exact path: connect wallet, open round, join/fund 2 GEN, record obligations,
+  accept, review, then withdraw or recover.
+- Verification outcome: completed within the 500-character field limit.
+- Links: production Vercel app, public GitHub repository, and primary Studionet
+  Explorer contract URL.
+
+`PORTAL_FINAL_SUBMIT=NOT_PERFORMED` — this log records completion of the local
+form preparation only; it does not claim that the Portal Submit button was
+clicked.

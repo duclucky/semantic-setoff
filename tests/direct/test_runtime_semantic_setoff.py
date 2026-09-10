@@ -56,9 +56,10 @@ def _setup_ready(contract, vm, alice, bob, charlie, round_id="round-1"):
     )
 
 
-def _mock_review(vm, digest, classifications, verdict):
+def _mock_review(vm, digest, charter_digest, classifications, verdict):
     payload = {
         "evidence_digest": digest,
+        "charter_digest": charter_digest,
         "verdict": verdict,
         "entries": [
             {
@@ -73,6 +74,29 @@ def _mock_review(vm, digest, classifications, verdict):
     vm.mock_llm(r"(?s).*Classify each exact stored obligation.*", json.dumps(payload))
 
 
+def test_canonical_review_evidence_contains_exact_ratified_charter(
+    direct_vm,
+    direct_deploy,
+    direct_alice,
+    direct_bob,
+    direct_charlie,
+):
+    contract = direct_deploy(CONTRACT_PATH)
+    create_round(contract, direct_vm, direct_alice, direct_bob, direct_charlie, "round-charter")
+    round_state = j(contract.get_round("round-charter"))
+    digest = round_state["charter_digest"]
+    fund(contract, direct_vm, direct_alice, digest, "round-charter")
+    fund(contract, direct_vm, direct_bob, digest, "round-charter")
+    fund(contract, direct_vm, direct_charlie, digest, "round-charter")
+
+    evidence = j(contract._evidence_pack("round-charter"))
+    assert evidence["round_id"] == "round-charter"
+    assert evidence["charter"] == round_state["charter"]
+    assert evidence["charter_digest"] == digest
+    assert len(evidence["ratifications"]) == 3
+    assert all(item["ratified"] is True for item in evidence["ratifications"])
+
+
 def test_full_nettable_lifecycle_derives_credits_and_conserves_value(
     direct_vm,
     direct_deploy,
@@ -83,7 +107,7 @@ def test_full_nettable_lifecycle_derives_credits_and_conserves_value(
     contract = direct_deploy(CONTRACT_PATH)
     _setup_ready(contract, direct_vm, direct_alice, direct_bob, direct_charlie)
     context = j(contract.get_review_context("round-1"))
-    _mock_review(direct_vm, context["evidence_digest"], ["NETTABLE", "NETTABLE", "NETTABLE"], "NETTABLE")
+    _mock_review(direct_vm, context["evidence_digest"], context["charter_digest"], ["NETTABLE", "NETTABLE", "NETTABLE"], "NETTABLE")
 
     direct_vm.sender = direct_alice
     direct_vm.value = 0
@@ -110,7 +134,7 @@ def test_ambiguous_review_is_retryable_without_state_or_value_movement(
     contract = direct_deploy(CONTRACT_PATH)
     _setup_ready(contract, direct_vm, direct_alice, direct_bob, direct_charlie, "round-amb")
     context = j(contract.get_review_context("round-amb"))
-    _mock_review(direct_vm, context["evidence_digest"], ["AMBIGUOUS", "AMBIGUOUS", "AMBIGUOUS"], "AMBIGUOUS")
+    _mock_review(direct_vm, context["evidence_digest"], context["charter_digest"], ["AMBIGUOUS", "AMBIGUOUS", "AMBIGUOUS"], "AMBIGUOUS")
 
     direct_vm.sender = direct_alice
     contract.review_round("round-amb")
@@ -133,7 +157,7 @@ def test_conflict_review_refunds_each_funded_participant_without_setoff(
     contract = direct_deploy(CONTRACT_PATH)
     _setup_ready(contract, direct_vm, direct_alice, direct_bob, direct_charlie, "round-conflict")
     context = j(contract.get_review_context("round-conflict"))
-    _mock_review(direct_vm, context["evidence_digest"], ["CONFLICT", "NETTABLE", "NETTABLE"], "CONFLICT")
+    _mock_review(direct_vm, context["evidence_digest"], context["charter_digest"], ["CONFLICT", "NETTABLE", "NETTABLE"], "CONFLICT")
 
     direct_vm.sender = direct_bob
     contract.review_round("round-conflict")
@@ -204,6 +228,7 @@ def test_invalid_validator_meaning_and_unauthorized_review_leave_state_unchanged
     context = j(contract.get_review_context("round-invalid"))
     malformed = {
         "evidence_digest": context["evidence_digest"],
+        "charter_digest": context["charter_digest"],
         "verdict": "NETTABLE",
         "entries": [
             {"obligation_id": "O:0", "classification": "NETTABLE", "conflict_root_id": ""},
@@ -225,6 +250,76 @@ def test_invalid_validator_meaning_and_unauthorized_review_leave_state_unchanged
     assert j(contract.get_round("round-invalid")) == before_round
 
 
+def test_wrong_verdict_charter_digest_cannot_reach_settlement(
+    direct_vm,
+    direct_deploy,
+    direct_alice,
+    direct_bob,
+    direct_charlie,
+):
+    contract = direct_deploy(CONTRACT_PATH)
+    _setup_ready(contract, direct_vm, direct_alice, direct_bob, direct_charlie, "round-wrong-charter")
+    before_round = j(contract.get_round("round-wrong-charter"))
+    before_obligations = j(contract.get_obligations("round-wrong-charter"))
+    context = j(contract.get_review_context("round-wrong-charter"))
+    wrong_charter_digest = {
+        "evidence_digest": context["evidence_digest"],
+        "charter_digest": "sha256:not-the-ratified-charter",
+        "verdict": "NETTABLE",
+        "entries": [
+            {"obligation_id": "O:0", "classification": "NETTABLE", "conflict_root_id": ""},
+            {"obligation_id": "O:1", "classification": "NETTABLE", "conflict_root_id": ""},
+            {"obligation_id": "O:2", "classification": "NETTABLE", "conflict_root_id": ""},
+        ],
+        "summary": "must not settle against another charter",
+    }
+    direct_vm.mock_llm(r"(?s).*Classify each exact stored obligation.*", json.dumps(wrong_charter_digest))
+    direct_vm.sender = direct_alice
+    with direct_vm.expect_revert("charter digest mismatch"):
+        contract.review_round("round-wrong-charter")
+    assert j(contract.get_round("round-wrong-charter")) == before_round
+    assert j(contract.get_obligations("round-wrong-charter")) == before_obligations
+    assert j(contract.get_accounting())["total_locked_gen"] == "6"
+
+
+def test_ambiguous_precedence_and_conflict_root_are_deterministic(
+    direct_vm,
+    direct_deploy,
+    direct_alice,
+    direct_bob,
+    direct_charlie,
+):
+    contract = direct_deploy(CONTRACT_PATH)
+    _setup_ready(contract, direct_vm, direct_alice, direct_bob, direct_charlie, "round-precedence")
+    context = j(contract.get_review_context("round-precedence"))
+    mixed = {
+        "evidence_digest": context["evidence_digest"],
+        "charter_digest": context["charter_digest"],
+        "verdict": "CONFLICT",
+        "entries": [
+            {"obligation_id": "O:0", "classification": "CONFLICT", "conflict_root_id": "O:0"},
+            {"obligation_id": "O:1", "classification": "AMBIGUOUS", "conflict_root_id": ""},
+            {"obligation_id": "O:2", "classification": "NETTABLE", "conflict_root_id": ""},
+        ],
+        "summary": "ambiguity must take precedence",
+    }
+    direct_vm.mock_llm(r"(?s).*Classify each exact stored obligation.*", json.dumps(mixed))
+    direct_vm.sender = direct_alice
+    with direct_vm.expect_revert("verdict precedence mismatch"):
+        contract.review_round("round-precedence")
+    assert j(contract.get_round("round-precedence"))["state"] == "READY"
+    assert j(contract.get_accounting())["total_locked_gen"] == "6"
+
+    wrong_root = dict(mixed)
+    wrong_root["verdict"] = "CONFLICT"
+    wrong_root["entries"] = [dict(item) for item in mixed["entries"]]
+    wrong_root["entries"][1] = {"obligation_id": "O:1", "classification": "NETTABLE", "conflict_root_id": ""}
+    wrong_root["entries"][0]["conflict_root_id"] = "O:2"
+    with direct_vm.expect_revert("verdict conflict root invalid"):
+        contract._normalize_verdict(wrong_root, ["O:0", "O:1", "O:2"])
+    assert j(contract.get_round("round-precedence"))["state"] == "READY"
+
+
 def test_settled_credit_withdraws_once_and_preserves_accounting(
     direct_vm,
     direct_deploy,
@@ -235,7 +330,7 @@ def test_settled_credit_withdraws_once_and_preserves_accounting(
     contract = direct_deploy(CONTRACT_PATH)
     _setup_ready(contract, direct_vm, direct_alice, direct_bob, direct_charlie, "round-withdraw")
     context = j(contract.get_review_context("round-withdraw"))
-    _mock_review(direct_vm, context["evidence_digest"], ["NETTABLE", "NETTABLE", "NETTABLE"], "NETTABLE")
+    _mock_review(direct_vm, context["evidence_digest"], context["charter_digest"], ["NETTABLE", "NETTABLE", "NETTABLE"], "NETTABLE")
     direct_vm.sender = direct_alice
     contract.review_round("round-withdraw")
 

@@ -1,7 +1,8 @@
 # Portal Builders submission packet (copy-ready draft)
 
-Status: `READY_FOR_PORTAL_REVIEW` — do not click final Submit without explicit
-action-time authorization.
+Status: `REVIEW_REVISION_LOCAL_PASS_NETWORK_PENDING` — reviewer-requested fixes
+are locally verified, but do not resubmit until the corrected contract has a new
+Studionet deployment/lifecycle and the frontend points to it.
 
 ## Category
 
@@ -22,7 +23,7 @@ contract code validates coverage, IDs, classes, conflict roots and the set
 digest, then derives the consequence: a fully accounted settlement credit,
 non-nettable refund, or retryable no-movement result. The UI separates EVM
 wallet writes from GenLayer IC reads and reloads canonical state after
-finalization. Current local evidence: one linted contract, 12 direct tests,
+finalization. Current local evidence: one linted contract, 16 direct tests,
 frontend adapter tests, and a successful production build. Studionet deployment
 and a full three-actor `SETTLED` lifecycle are now verified. Public repository,
 current-commit CI, Chrome wallet funding, and Vercel live evidence are recorded
@@ -38,7 +39,7 @@ below. Portal acceptance is not claimed.
 | CI link | https://github.com/duclucky/semantic-setoff/actions |
 | Live demo | https://semantic-setoff.vercel.app/ |
 | Contract count | `1` (`SemanticSetoff`) |
-| Direct tests | `12 passed` |
+| Direct tests | `16 passed` |
 | Local acceptance | `Project semantic-setoff -Category projects` / `NO BLOCKER` |
 
 ## Honest limits
