@@ -7,8 +7,8 @@ D:/Genlayer Project/semantic-setoff
 gh repo view duclucky/semantic-setoff --json nameWithOwner,isPrivate,url,defaultBranchRef,description
 {"defaultBranchRef":{"name":"main"},"description":"SemanticSetoff: validator-checked three-party GEN obligation netting on GenLayer","isPrivate":false,"nameWithOwner":"duclucky/semantic-setoff","url":"https://github.com/duclucky/semantic-setoff"}
 
-git rev-parse HEAD
-d6977cb348e479c183bfed03e45f2989073d140e
+git rev-parse HEAD (deployment source revision)
+a64deef10be7f5ad103a3ab10550e767cf8ec689
 ```
 
 The staged allowlist and ignored-file checks found no `.env`, key, wallet

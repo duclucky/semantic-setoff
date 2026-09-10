@@ -6,7 +6,8 @@ import { studionet } from "../frontend/node_modules/genlayer-js/dist/chains/inde
 
 const project = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const endpoint = process.env.STUDIONET_RPC_URL || "https://studio.genlayer.com/api";
-const contractAddress = "0xaD05145fcec7914189FcAe469288c8E2cB7E4f5c";
+const deployment = JSON.parse(fs.readFileSync(path.join(project, "docs", "evidence", "studionet", "deployment.json"), "utf8"));
+const contractAddress = deployment.contractAddress;
 const roundId = process.argv[2] || "round-mtse8le6";
 const GEN = 10n ** 18n;
 

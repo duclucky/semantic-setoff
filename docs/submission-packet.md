@@ -1,8 +1,8 @@
 # Portal Builders submission packet (copy-ready draft)
 
-Status: `REVIEW_REVISION_LOCAL_PASS_NETWORK_PENDING` — reviewer-requested fixes
-are locally verified, but do not resubmit until the corrected contract has a new
-Studionet deployment/lifecycle and the frontend points to it.
+Status: `REVIEW_REVISION_NETWORK_VERIFIED` — reviewer-requested fixes are
+locally, onchain, and in the production frontend verified; Portal resubmission
+is still pending explicit final-submit authorization.
 
 ## Category
 
@@ -34,8 +34,8 @@ below. Portal acceptance is not claimed.
 | Field | Current value |
 |---|---|
 | Repository | https://github.com/duclucky/semantic-setoff |
-| Primary contract Explorer | https://explorer-studio.genlayer.com/address/0xaD05145fcec7914189FcAe469288c8E2cB7E4f5c |
-| Lifecycle evidence | `docs/evidence/studionet/lifecycle.json` (`SETTLED`, 6 GEN withdrawn) |
+| Primary contract Explorer | https://explorer-studio.genlayer.com/address/0x2809483C6338861774e0D7655B1a6E33f0e9225A |
+| Lifecycle evidence | `docs/evidence/studionet/lifecycle.json` (`setoff-a64deef1`, `SETTLED`, 6 GEN withdrawn) |
 | CI link | https://github.com/duclucky/semantic-setoff/actions |
 | Live demo | https://semantic-setoff.vercel.app/ |
 | Contract count | `1` (`SemanticSetoff`) |

@@ -6,8 +6,8 @@ Target network: Studionet
 Submission channel: Portal Builders  
 Current checkpoint: reviewer-requested charter evidence binding,
 charter-grounded verdict rules, deterministic ambiguity precedence, and the
-frontend 600-character limit pass locally. The corrected revision must replace
-the historical Studionet deployment before Portal resubmission.
+frontend 600-character limit pass locally and in a corrected Studionet
+deployment/lifecycle. Production frontend publishing remains next.
 
 This plan operationalizes `MASTER-PROMPT-GENLAYER-END-TO-END.md` without
 replacing it. A phase starts only after the prior exit gate is supported by
@@ -217,10 +217,10 @@ Status: `DONE` — visual structure is now governed by FE-PRESERVE.
   contract state; otherwise mark the exact item `PENDING_REAL_EVIDENCE` and do
   not widen claims. Current safe preflight output is
   Preflight reached `ACTORS_READY count=3`. Deployment is bound in
-  `docs/evidence/studionet/deployment.json`; lifecycle round
-  `setoff-a3bc176` reached `SETTLED`, all 14 transactions were
+  `docs/evidence/studionet/deployment.json`; review-revision lifecycle round
+  `setoff-a64deef1` reached `SETTLED`, all 12 transactions were
   `FINALIZED/MAJORITY_AGREE/SUCCESS`, and canonical accounting holds with 6
-  GEN withdrawn. Funding and a superseded deployment are separately archived.
+  GEN withdrawn. Superseded deployments are separately archived.
   Local gltest smoke remains `PENDING_HARNESS_FIX` in
   `docs/evidence/local/gltest-smoke.txt`.
 

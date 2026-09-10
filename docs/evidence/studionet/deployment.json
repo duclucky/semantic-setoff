@@ -1,12 +1,12 @@
 {
   "network": "studionet",
   "chainId": 61999,
-  "contractAddress": "0xaD05145fcec7914189FcAe469288c8E2cB7E4f5c",
-  "explorerUrl": "https://explorer-studio.genlayer.com/address/0xaD05145fcec7914189FcAe469288c8E2cB7E4f5c",
-  "sourceCommit": "a3bc176",
-  "sourceSha256": "c6d58b74fbdee794eb498e4b30bcbf27c1b33813ce933c21bf47b197d70c6be4",
+  "contractAddress": "0x2809483C6338861774e0D7655B1a6E33f0e9225A",
+  "explorerUrl": "https://explorer-studio.genlayer.com/address/0x2809483C6338861774e0D7655B1a6E33f0e9225A",
+  "sourceCommit": "a64deef10be7f5ad103a3ab10550e767cf8ec689",
+  "sourceSha256": "4d4c82a9e6bb26f401aca8d08198b569e5db3a1615c966e29fc3b9d80def6df9",
   "deploy": {
-    "transactionHash": "0x8e9571aa2f43e9435d9a48ed33d2bc8f75b223ccdca05c4cac5e063c3a71c60a",
+    "transactionHash": "0xf6f18da77c2642598a30aedd71a4a8a29ab59e763506bb8053cad4bcc497fbf9",
     "status": "FINALIZED",
     "resultName": "MAJORITY_AGREE",
     "executionResult": "SUCCESS",

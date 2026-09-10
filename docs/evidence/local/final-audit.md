@@ -1,6 +1,6 @@
 # Final local audit
 
-Master prompt re-read in full on 2026-09-08:
+Master prompt re-read in full on 2026-09-10:
 
 ```text
 MASTER_REREAD_OK chars=64769 prompt_end=True
@@ -18,9 +18,9 @@ MASTER_REREAD_OK chars=64769 prompt_end=True
 | 3B Frontend self-review | DONE | Browser checks at default and 375px; no horizontal overflow or console errors. |
 | 4 Full specification | DONE | `npm run audit:spec` reports 23 headings, 14 gates, 7 safety rows, 4 authority rows and 8 invariants. |
 | 5 Intelligent Contract | DONE | `genvm-lint` recognizes `SemanticSetoff`, 14 methods, exact header and one class. |
-| 6 Direct/gltest/local verification | DONE for direct/local; integration pending | `16 passed`; GLSim smoke separately failed in Windows temp-file harness before execution. |
+| 6 Direct/gltest/local verification | DONE for direct/local; GLSim smoke separately failed in Windows temp-file harness before execution | `16 passed`; the independent Studionet lifecycle is the network verification. |
 | 7 genlayer-js integration | DONE locally | Adapter test, TypeScript, production build, finality polling and canonical reload checks pass. |
-| 8 Studionet lifecycle | DONE | `ACTORS_READY count=3`; deployment finalized; 14 lifecycle transactions finalized successfully; canonical state `SETTLED`; 6 GEN withdrawn and conservation holds. |
+| 8 Studionet lifecycle | DONE | `ACTORS_READY count=3`; corrected deployment finalized; 12 lifecycle transactions finalized successfully; canonical state `SETTLED`; 6 GEN withdrawn and conservation holds. |
 | 9 Deployed address wiring | DONE | Ignored `frontend/.env` points to the verified contract; live-configured build succeeds. |
 | 10 English-only audit | DONE | Manual route review and secret-content scan pass; see `english-audit.txt`. |
 | 11 Public GitHub publication | DONE after current-head push/CI | Public repository and current-commit CI evidence are recorded under `docs/evidence/public/`. |
@@ -61,11 +61,13 @@ Project semantic-setoff -Category projects
 NO BLOCKER
 ```
 
-Current public proof is pinned to commit `d6977cb348e479c183bfed03e45f2989073d140e`:
-GitHub CI run `34205748128` completed `success`, and the production Vercel
-alias is `https://semantic-setoff.vercel.app/`. The browser IC RPC returned HTTP
-200 with chain `0xf22f`; Chrome canonical funding evidence is stored under
-`docs/evidence/studionet/browser-wallet-funding.json`.
+Review revision source is commit `a64deef10be7f5ad103a3ab10550e767cf8ec689`.
+Contract `0x2809483C6338861774e0D7655B1a6E33f0e9225A` and lifecycle
+`setoff-a64deef1` are finalized on Studionet: 12 transactions
+`FINALIZED/MAJORITY_AGREE/SUCCESS`, `SETTLED`, 6 GEN withdrawn, and conservation
+holds. Production Vercel deployment `dpl_9PHkWFYncxLi6VVD8BcnMg6YwuaG` is READY
+at `https://semantic-setoff.vercel.app/` and its bundle contains the corrected
+contract address.
 
 Public repository, CI, Vercel and browser evidence are now recorded in
 `docs/evidence/public/`, `docs/evidence/live/app.txt`, and

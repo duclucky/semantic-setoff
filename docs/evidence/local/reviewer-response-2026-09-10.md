@@ -35,6 +35,9 @@ FRONTEND_ADAPTER_TEST_OK
 5033 modules transformed.
 ```
 
-Network status: `PENDING_CORRECTED_STUDIONET_DEPLOYMENT`. The earlier contract
-and lifecycle remain historical proof only and must not be presented as evidence
-for this corrected source revision.
+Network status: `CORRECTED_STUDIONET_LIFECYCLE_VERIFIED`. Contract
+`0x2809483C6338861774e0D7655B1a6E33f0e9225A` was deployed from source commit
+`a64deef10be7f5ad103a3ab10550e767cf8ec689`. Lifecycle round
+`setoff-a64deef1` reached `SETTLED`; all 12 transactions are
+`FINALIZED/MAJORITY_AGREE/SUCCESS`, with 6 GEN withdrawn and conservation true.
+The earlier contract remains archived as historical evidence only.

@@ -1,8 +1,9 @@
 # Production live verification (sanitized)
 
-Date: 2026-09-08
+Date: 2026-09-10
 Production URL: https://semantic-setoff.vercel.app/
-Vercel deployment: https://vercel.com/duckys-projects-bc83c6a0/semantic-setoff/GzGMPtV4kceJtWKBnVX5XCMY2uxY
+Vercel deployment: https://vercel.com/duckys-projects-bc83c6a0/semantic-setoff/9PHkWFYncxLi6VVD8BcnMg6YwuaG
+Active contract: https://explorer-studio.genlayer.com/address/0x2809483C6338861774e0D7655B1a6E33f0e9225A
 
 HTTP/body check (PowerShell):
 
@@ -10,6 +11,15 @@ HTTP/body check (PowerShell):
 HTTP_STATUS=200
 HAS_SEMANTICSETTLEOFF=True
 HAS_ROOT_ID=True
+```
+
+The production JavaScript bundle check returned the corrected contract address
+and did not contain the superseded review-revision address:
+
+```text
+bundle=/assets/index-B8kAm3qL.js
+HAS_CORRECT_ADDRESS=True
+HAS_SUPERSEDED_ADDRESS=False
 ```
 
 Browser-local IC RPC check from the production origin:
@@ -40,3 +50,8 @@ route. Console error/warning count for the clean live browser run was zero.
 The Chrome wallet extension itself requires the user to confirm signing; the
 agent did not access or automate the `chrome-extension://` popup. The script
 signed Studionet lifecycle remains separate from this browser-wallet proof.
+
+Fresh Chrome read-only verification of the production app showed the home page,
+then `/settings` with `Transaction network=Studionet`, `Target chain=61999`,
+`Canonical read path=Configured`, `Writes enabled=Yes`, and two detected wallet
+providers. Browser console error/warning count was zero for this run.
