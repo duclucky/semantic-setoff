@@ -65,10 +65,11 @@ Review revision source is commit `a64deef10be7f5ad103a3ab10550e767cf8ec689`.
 Contract `0x2809483C6338861774e0D7655B1a6E33f0e9225A` and lifecycle
 `setoff-a64deef1` are finalized on Studionet: 12 transactions
 `FINALIZED/MAJORITY_AGREE/SUCCESS`, `SETTLED`, 6 GEN withdrawn, and conservation
-holds. Production Vercel deployment `dpl_3zA7Y7xzybdqKuagoxVjZWLsQ31f` is READY
+holds. Production Vercel deployment `dpl_GvLg2RY9jtLHjg2ie7NjLL3Mbnor` is READY
 at `https://semantic-setoff.vercel.app/` and its bundle contains the corrected
 contract address. The latest browser regression test restored the selected OKX
 session after a full reload and reloaded canonical state in the same Chrome tab.
+It also verified that explicit Disconnect survives a full reload.
 
 Public repository, CI, Vercel and browser evidence are now recorded in
 `docs/evidence/public/`, `docs/evidence/live/app.txt`, and

@@ -2,8 +2,8 @@
 
 Date: 2026-09-10
 Production URL: https://semantic-setoff.vercel.app/
-Current source commit: 4cb1b39a830163a76d8e0d6cfdffbbbc955fe3a0
-Vercel deployment: https://vercel.com/duckys-projects-bc83c6a0/semantic-setoff/3zA7Y7xzybdqKuagoxVjZWLsQ31f
+Current source commit: c52f58683a4719035726c6fe9d917bf25beb0659
+Vercel deployment: https://vercel.com/duckys-projects-bc83c6a0/semantic-setoff/GvLg2RY9jtLHjg2ie7NjLL3Mbnor
 Active contract: https://explorer-studio.genlayer.com/address/0x2809483C6338861774e0D7655B1a6E33f0e9225A
 
 HTTP/body check (PowerShell):
@@ -18,7 +18,7 @@ The production JavaScript bundle check returned the corrected contract address
 and did not contain the superseded review-revision address:
 
 ```text
-bundle=/assets/index-DWLyQSpe.js
+bundle=/assets/index-BqaUIz5X.js
 HAS_CORRECT_ADDRESS=True
 HAS_SUPERSEDED_ADDRESS=False
 ```
@@ -61,3 +61,6 @@ After the wallet-session regression fix, the same Chrome tab connected the OKX
 account, reloaded `/rounds`, restored `0xbd73…d199` without reopening the wallet
 picker, and then loaded the canonical `round-mtux7c77` state. The round's browser
 payment was finalized with 2 GEN locked (`0x763b6f89723fd6f4efab62d9baf30317cbe77441abf013a14823b56013a0a33c`).
+
+The same tab then opened the account menu, selected `Disconnect`, and reloaded
+`/rounds`; the result remained `Connect wallet` with no automatic reconnection.
