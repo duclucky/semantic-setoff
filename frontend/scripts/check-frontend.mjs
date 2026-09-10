@@ -25,6 +25,7 @@ assert.match(context, /setSession\(null\)/);
 assert.match(context, /eth_accounts/);
 assert.match(context, /semantic-setoff\.wallet-provider/);
 assert.match(context, /sessionStorage/);
+assert.match(context, /uniqueAccounts/);
 assert.match(vite, /"\/genlayer-rpc"/);
 assert.doesNotMatch(adapter + wallet + context, /privateKey|seedPhrase|mnemonic/i);
 assert.doesNotMatch(adapter + wallet + context, /localStorage/);

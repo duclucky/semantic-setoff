@@ -81,8 +81,10 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    // Never auto-pick among multiple providers. Restore only an unambiguous account.
-    if (authorized.length === 1) setSession(authorized[0]);
+    // Never auto-pick among different providers/accounts. Duplicate announcements
+    // from one already-authorized wallet are still one unambiguous user choice.
+    const uniqueAccounts = new Set(authorized.map((candidate) => candidate.account.toLowerCase()));
+    if (authorized.length === 1 || (authorized.length > 1 && uniqueAccounts.size === 1)) setSession(authorized[0]);
   }, []);
 
   const refreshWallets = useCallback(async () => {
