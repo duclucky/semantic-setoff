@@ -1,0 +1,21 @@
+{
+  "network": "studionet",
+  "chainId": 61999,
+  "contractAddress": "0xaD05145fcec7914189FcAe469288c8E2cB7E4f5c",
+  "explorerUrl": "https://explorer-studio.genlayer.com/address/0xaD05145fcec7914189FcAe469288c8E2cB7E4f5c",
+  "sourceCommit": "a3bc176",
+  "sourceSha256": "c6d58b74fbdee794eb498e4b30bcbf27c1b33813ce933c21bf47b197d70c6be4",
+  "deployTransactionHash": "0x8e9571aa2f43e9435d9a48ed33d2bc8f75b223ccdca05c4cac5e063c3a71c60a",
+  "status": "SUPERSEDED_REVIEW_REVISION",
+  "reason": "Reviewer required charter/digest binding in canonical leader-validator evidence, explicit charter-grounded classifications, and a frontend limit correction. No further value is sent to this revision.",
+  "observedAt": "2026-09-10T09:03:32+07:00",
+  "recovery": {
+    "roundId": "round-mtse8le6",
+    "roundState": "FUNDED",
+    "lockedFundsGEN": "6",
+    "applicableDeadline": "2026-09-10T08:13:00+07:00",
+    "nextSafeAction": "A listed participant may call expire_round, then each funded participant may withdraw the 2 GEN refund. This value-moving recovery is pending explicit action-time authorization.",
+    "evidence": "canonical get_round and get_accounting read on Studionet"
+  },
+  "evidenceIsSanitized": true
+}
