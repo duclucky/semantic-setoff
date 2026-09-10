@@ -24,6 +24,7 @@ assert.match(context, /wallet_addEthereumChain/);
 assert.match(context, /setSession\(null\)/);
 assert.match(context, /eth_accounts/);
 assert.match(context, /semantic-setoff\.wallet-provider/);
+assert.match(context, /semantic-setoff\.wallet-disconnected/);
 assert.match(context, /sessionStorage/);
 assert.match(context, /uniqueAccounts/);
 assert.match(vite, /"\/genlayer-rpc"/);

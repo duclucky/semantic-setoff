@@ -19,6 +19,7 @@ interface WalletContextValue {
 
 const WalletContext = createContext<WalletContextValue | null>(null);
 const SELECTED_WALLET_KEY = "semantic-setoff.wallet-provider";
+const DISCONNECTED_WALLET = "semantic-setoff.wallet-disconnected";
 
 function parseAccount(value: unknown): Address {
   if (!Array.isArray(value) || typeof value[0] !== "string" || !/^0x[a-fA-F0-9]{40}$/.test(value[0])) {
@@ -45,7 +46,7 @@ function rememberSelectedWallet(walletId: string): void {
 
 function forgetSelectedWallet(): void {
   try {
-    window.sessionStorage.removeItem(SELECTED_WALLET_KEY);
+    window.sessionStorage.setItem(SELECTED_WALLET_KEY, DISCONNECTED_WALLET);
   } catch {
     // Session storage is optional and must never block wallet disconnect.
   }
@@ -60,6 +61,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
   const restoreAuthorizedWallet = useCallback(async (discovered: WalletInfo[]) => {
     const rememberedId = readSelectedWalletId();
+    if (rememberedId === DISCONNECTED_WALLET) return;
     const candidates = rememberedId ? discovered.filter((wallet) => wallet.id === rememberedId) : discovered;
     const authorized: WalletSession[] = [];
     for (const wallet of candidates) {
